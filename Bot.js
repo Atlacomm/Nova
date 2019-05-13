@@ -34,13 +34,12 @@ const fs = require("fs");
 const config = require ("./config.json");
 const settings = require ("./settings.json");
 const client = new Discord.Client();
-const version = require ("./version.json")
 
 const activities_list = []; // creates an arraylist containing phrases you want your bot to switch through.
   
   console.log(`Nova: Copyright (C) 2019 Designed and Programed by Ree and ServerLion`.gray);
   console.log (`This is free software, and you are welcome to redistribute it`.gray);
-  console.log(`This version of Nova runs on nvaUX ${version.version}`.magenta);
+  console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
 // Command Handler by jtsshieh and modified by Alee
 
@@ -112,7 +111,7 @@ fs.readdir('./commands', (err, files) => {
     });
     }, 2000);
     setTimeout(() => {
-      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${version.version}`)
+      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${settings.version}`)
       embed.setThumbnail(`${images.done}`)
       msg.edit({embed});
     }, 2500);
