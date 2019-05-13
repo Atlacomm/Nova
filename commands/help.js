@@ -45,7 +45,7 @@ module.exports.run = async (client, message, args) => {
     if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Suzu doesn\'t have the permission to send embed links please enable them to use the full help.');
   }
   const embed = new Discord.RichEmbed()
-    .setAuthor(`Nova Help and on ${client.guilds.size} servers`, client.user.avatarURL)
+    .setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
     .setThumbnail(`${images.unknown}`)
     .setDescription('Every command you input into Nova for this server is `' + require('../settings.json').prefix + '`')
     .setColor(0xE70056)
