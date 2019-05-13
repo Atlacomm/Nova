@@ -32,6 +32,7 @@ module.exports.run = async (client, msg) => {
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+  let embed = new Discord.RichEmbed();
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if(!prefixes[msg.guild.id]){
     prefixes[msg.guild.id] = {
@@ -39,41 +40,16 @@ module.exports.run = async (client, msg) => {
     };
   }
   let prefix = prefixes[msg.guild.id].prefixes
-    uptime = client.uptime;
-    var seconds = Math.round(uptime / 1000)
-    var minutes = 0
-    var hours = 0
-    var days = 0
- 
-    while(seconds >= 60){
-        seconds -= 60
-        minutes += 1
-    }
-    while(minutes >= 60){
-        minutes -= 60
-        hours += 1
-    }
-    while(hours >= 24){
-        hours -= 24
-        days += 1
-    }
-    let embed = new Discord.RichEmbed
-    embed.setTitle("Current client uptime")
-    embed.setAuthor(msg.author.username, msg.author.avatarURL)
-    embed.addField(`Nova has been online for:`,  `${days} Days, ${hours} Hours, ${minutes} Minutes, and ${seconds} Seconds.`)
-    embed.setColor(0xE70056)
-    embed.setThumbnail(`${images.clock}`)
-    embed.setFooter("Use "+prefix+"help to see all of my commands")
-    await msg.channel.send({embed});
- };
+  
+};
 
 exports.conf = {
   aliases: [],
   guildOnly: false,
 };
 exports.help = {
-  name: 'uptime',
-  description: 'The uptime command',
-  usage: 'uptime',
-  category: '- System Commands',
+  name: 'commandnamehere',
+  description: 'The commandnamehere command',
+  usage: 'commandnamehere',
+  category: '- Utility Commands',
 };

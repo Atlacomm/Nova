@@ -39,41 +39,36 @@ module.exports.run = async (client, msg) => {
     };
   }
   let prefix = prefixes[msg.guild.id].prefixes
-    uptime = client.uptime;
-    var seconds = Math.round(uptime / 1000)
-    var minutes = 0
-    var hours = 0
-    var days = 0
- 
-    while(seconds >= 60){
-        seconds -= 60
-        minutes += 1
-    }
-    while(minutes >= 60){
-        minutes -= 60
-        hours += 1
-    }
-    while(hours >= 24){
-        hours -= 24
-        days += 1
-    }
-    let embed = new Discord.RichEmbed
-    embed.setTitle("Current client uptime")
+  let user = msg.mentions.users.first();
+    if (user) {
+      const member = msg.guild.member(user);
+      if (member) {
+        let embed = new Discord.RichEmbed();
+        embed.setAuthor(msg.author.username, msg.author.avatarURL)
+        embed.setTitle("Profile Picture");
+        embed.setColor(0xE70056);
+        embed.setImage(user.avatarURL);
+        embed.setFooter("Use "+prefix+"help to see all of my commands");
+        msg.channel.send({embed});   
+     }
+  }else{
+    let embed = new Discord.RichEmbed();
     embed.setAuthor(msg.author.username, msg.author.avatarURL)
-    embed.addField(`Nova has been online for:`,  `${days} Days, ${hours} Hours, ${minutes} Minutes, and ${seconds} Seconds.`)
-    embed.setColor(0xE70056)
-    embed.setThumbnail(`${images.clock}`)
-    embed.setFooter("Use "+prefix+"help to see all of my commands")
-    await msg.channel.send({embed});
- };
+    embed.setTitle("Profile Picture");
+    embed.setColor(0xE70056);
+    embed.setImage(msg.author.avatarURL);
+    embed.setFooter("Use "+prefix+"help to see all of my commands");
+    msg.channel.send({embed});     
+  }
+};
 
 exports.conf = {
-  aliases: [],
-  guildOnly: false,
+aliases: [],
+guildOnly: false,
 };
 exports.help = {
-  name: 'uptime',
-  description: 'The uptime command',
-  usage: 'uptime',
-  category: '- System Commands',
+name: 'avatar',
+description: 'The pic command',
+usage: 'avatar',
+category: '- Utility Commands',
 };

@@ -4,8 +4,8 @@
  *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
  *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
  *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
- *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%#((%%%%*...........
- *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%%%%%%%%%...........
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
  *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
@@ -28,17 +28,37 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
-    const Discord = require("discord.js");
-    const used = process.memoryUsage().heapUsed / 1024 / 1024;
-    const images = require("../images.json")
+  const Discord = require('discord.js');
+  const fs = require("fs")
+  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
+  let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  if(!prefixes[msg.guild.id]){
+    prefixes[msg.guild.id] = {
+      prefixes: settings.prefix
+    };
+  }
+  let prefix = prefixes[msg.guild.id].prefixes
+  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  let version = JSON.parse(fs.readFileSync("./version.nvac", "utf8"))
+  let heartbeat = Math.round(client.ping)
+  let pingtime = Date.now()
 
-    let embed = new Discord.RichEmbed
-    embed.setDescription("System status")
-    embed.setColor(0x00bfff);
-    embed.setThumbnail(`${images.}`)
-    embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
-    embed.addField("guilds", `${client.guilds.size}`)
-    msg.channel.send({embed})
+  let embed = new Discord.RichEmbed
+  embed.setTitle("System status")
+  embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`)
+  embed.setColor(0xE70056);
+  embed.setThumbnail(`${images.cog}`)
+  embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
+  embed.addField("guilds", `${client.guilds.size}`)
+  embed.addField("version", `This bot is running on nvaUX ${version.version}`)
+  embed.setFooter("Use "+prefix+"help to see all of my commands");
+  msg.channel.send({embed}).then(function(msg) {
+    let time = Date.now() - pingtime;
+    embed.setDescription(`Ping: ${time.toString()}ms\nHeartbeat: ${heartbeat}ms`)
+    msg.edit({embed});
+  });
+
     
 };
 
@@ -50,5 +70,5 @@ exports.conf = {
     name: 'sysmanager',
     description: 'The sysmanager command',
     usage: 'sysmanager',
-    category: '- Status Commands',
+    category: '- System Commands',
   };
