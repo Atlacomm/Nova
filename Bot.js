@@ -4,8 +4,8 @@
  *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
  *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
  *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
- *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%#((%%%%*...........
- *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%%%%%%%%%...........
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
  *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
@@ -28,18 +28,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 const Discord = require('discord.js');
-const images = require('./images.json')
-const colors = require("colors");
 const fs = require("fs");
-const config = require ("./config.json");
-const settings = require ("./settings.json");
+let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+const colors = require("colors");
+let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
 const client = new Discord.Client();
+let version = JSON.parse(fs.readFileSync("./version.nvac", "utf8"))
+global.servers = {};
 
 const activities_list = []; // creates an arraylist containing phrases you want your bot to switch through.
-  
-  console.log(`Nova: Copyright (C) 2019 Designed and Programed by Ree and ServerLion`.gray);
-  console.log (`This is free software, and you are welcome to redistribute it`.gray);
-  console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
+  console.clear()
+  console.log("...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................".magenta)
+  console.log(`Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.`.magenta);
+  console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here :https://github.com/vicr123/AstralMod/'.magenta)
+  console.log (`This is free software, and you are welcome to redistribute it`.magenta);
+  console.log(`This version of Nova runs on nvaUX ${version.version}`.magenta);
 
 // Command Handler by jtsshieh and modified by Alee
 
@@ -52,27 +55,35 @@ fs.readdir('./commands', (err, files) => {
   files.forEach(file => {
     try {
       const command = require(`./commands/${file}`);
-      console.log(`Attempting to load the command "${command.help.name}".`.cyan);
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      process.stdout.write(`attempting to load the command "${command.help.name}".`.cyan);
+      //console.log(`Attempting to load the command "${command.help.name}".`.cyan);
       client.commands.set(command.help.name, command);
-      command.conf.aliases.forEach(alias => {
-        client.aliases.set(alias, command.help.name);
-        console.log(`Attempting to load "${alias}" as an alias for "${command.help.name}"`.cyan);
-      });
     }
     catch (err) {
       console.log('An error has occured trying to load a command. Here is the error.'.red);
       console.log(err.stack);
     }
   });
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
   console.log('Command Loading complete!'.green);
 });
 
   client.on('ready', async () => {
-  console.log(`Logged in as ${client.user.tag}!`.green);
   let channel = client.channels.find(ch => ch.id === '539142431552176139');
   let embed = new Discord.RichEmbed(); 
   
-  try{  
+  try{ 
+    var twirlTimer = (function() {
+      var P = ["[\\] N   ", "[|] NO  ", "[/] NOV ", "[-] NOVA", "[\\]  OVA", "[|]  VA", "[/]    A", "[-]     "];
+      var x = 0;
+      return setInterval(function() {
+        process.stdout.write("\r" + P[x++]);
+        x &= 3;
+      }, 500);
+    })();
     embed.setTitle("N O V A");
     embed.setDescription('Nova is now starting. please wait..');
     embed.setColor(0x000000);
@@ -111,9 +122,13 @@ fs.readdir('./commands', (err, files) => {
     });
     }, 2000);
     setTimeout(() => {
-      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${settings.version}`)
+      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${version.version}`)
       embed.setThumbnail(`${images.done}`)
-      msg.edit({embed});
+      msg.edit({embed})
+      clearInterval(twirlTimer)
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0);
+      console.log(`Logged in as ${client.user.tag}`.green);
     }, 2500);
     //TODO: UINFO
     //TODO: LOGGING
@@ -166,12 +181,18 @@ fs.readdir('./commands', (err, files) => {
 });
 
 client.on('message', msg => {
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if (msg.author.bot) return;
+  if(!prefixes[msg.guild.id]){
+    prefixes[msg.guild.id] = {
+      prefixes: settings.prefix
+    };
+  }
 
+  let prefix = prefixes[msg.guild.id].prefixes
 
-
-  if (!msg.content.startsWith(settings.prefix)) return;
-  const args = msg.content.slice(settings.prefix.length).trim().split(/ +/g);
+  if (!msg.content.startsWith(prefix)) return;
+  const args = msg.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift();
   let cmd;
 
@@ -184,7 +205,14 @@ client.on('message', msg => {
   if (cmd) {
     if (cmd.conf.guildOnly == true) {
       if (!msg.channel.guild) {
-        return msg.author.send('This command can only be ran in a guild.');
+         let goembed = new Discord.RichEmbed
+         goembed.setAuthor(msg.author.username, msg.author.avatarURL)
+         goembed.setTitle("Error")
+         goembed.setColor(0xE70056)
+         goembed.setThumbnail(`${images.error}`)
+         goembed.setDescription("This command can only be ran in a guild due to compatibility reasons.")
+         goembed.setFooter("We're sorry about that!")
+         return msg.channel.send(goembed)
       }
     }
     try {
@@ -207,7 +235,7 @@ client.on('message', msg => {
     let embed = new Discord.RichEmbed();
     embed.setTitle("Unknown Command");
     embed.setColor(0xff0000);
-    embed.setDescription('Please use **'+settings.prefix+'help** to see all available commands. some commands may not be available to you depending on your role.')
+    embed.setDescription('Please use **'+prefix+'help** to see all available commands. some commands may not be available to you depending on your role.')
     msg.channel.send({embed})
   }
 } catch (error) {
@@ -236,36 +264,8 @@ client.on('guildMemberAdd', member => {
     let channel = client.channels.find(ch => ch.id === '539142431552176139');
     channel.send(":no_entry_sign: :hammer: Unbanned User: " + user.tag)
   });
-
-  //client.on('messageDelete', message => {
-    //if (message.channel.guild.id != "537101504864190464") return;
-    //let channel = client.channels.find(ch => ch.id === '539142431552176139');
-    //let embed = new Discord.RichEmbed();
-    //embed.setTitle(":wastebasket: Message Delete");
-    //embed.setColor(0xFF0000);
-    //embed.setDescription('Message by ' + message.author.username + ' deleted on ' + new Date());
-    //embed.addField("Message content", message);
-    //channel.send({embed});
-  //});
-
-  //client.on('messageUpdate', (oldMessage, newMessage) => {
-   // try{
-   // if (oldMessage.channel.guild.id != "537101504864190464") return;
-   // if (oldMessage == newMessage) return;
-    //if (newMessage == oldMessage) return;
-    //let channel = client.channels.find(ch => ch.id === '539142431552176139');
-    //let embed = new Discord.RichEmbed();
-    //embed.setTitle(":pencil: Message Edit");
-    //embed.setColor(0xFF4500);
-    //embed.setDescription('Message by ' + oldMessage.author.username + ' edited on ' + new Date());
-    //embed.addField("Old Message", oldMessage); // TODO: Fix this line
-    //embed.addField("New Message", newMessage);
-    //channel.send({embed});  
-    //} catch (error) {
-    //  console.log(error) 
-    //}  
-  //});
-client.login(config.token).catch(function() {
+let logintoken = JSON.parse(fs.readFileSync("./config.nvac", "utf8"))
+client.login(logintoken.token).catch(function() {
   console.log('hey uh, Login failed. The token that you put in is most likely invalid, please put in a new one...'.red);
   process.exit(0);
 });

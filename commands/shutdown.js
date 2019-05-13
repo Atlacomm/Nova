@@ -4,8 +4,8 @@
  *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
  *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
  *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
- *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%#((%%%%*...........
- *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%%%%%%%%%...........
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
  *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
@@ -29,41 +29,58 @@
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
     const Discord = require('discord.js');
-    const images = require('../images.json');
+    const fs = require("fs")
+    let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+    let requesterID = msg.author.id;
     if (msg.author.id == "472923135965003786" || msg.author.id == "299314446428274689" || msg.author.id == "242775871059001344"){
         let channel = client.channels.find(ch => ch.id === '539142431552176139'); 
         let embed2 = new Discord.RichEmbed();
         embed2.setTitle("Shutdown")
-        embed2.setThumbnail(`${images.off}`)
+        embed2.setThumbnail(`${images.timer5sec}`)
         embed2.setColor(0xE70056)
-        embed2.setDescription("The shutdown command was initiated. countdown is unfortunately unavailable.")
-        embed2.setFooter("this was logged in the space station")
-          await msg.channel.send(embed2)
+        embed2.setDescription("The shutdown command was initiated. If you want to cancel this operation, you have 5 seconds to react with 🚫 to cancel the operation.")
+        await msg.channel.send(embed2).then(function(msg) {
+          msg.react('🚫');
 
-        channel.setTopic(`uptime: 0/0/0`)
-        .catch(console.error);
+          let timeout = setTimeout(function() {
+          msg.clearReactions();
+          embed2.setDescription("Shutdown confirmed, nova will now shut down");
+          embed2.setThumbnail(`${images.off}`)
+          msg.edit(embed2);
+          channel.setTopic(`uptime: 0/0/0`)
+          .catch(console.error);
 
-        console.log('Powering off...'.magenta);
-        let embed = new Discord.RichEmbed();
-        embed.setAuthor(msg.author.username, msg.author.avatarURL)
-        embed.setTitle("Power off");
-        embed.setColor(0xff0000);
-        embed.setDescription('Nova will shut down now.');
-        embed.setThumbnail(`${images.off}`);
-        embed.setFooter("This may take a while...");
-        let reply = await channel.send({embed})
-        setTimeout(() =>{
-            embed.setDescription("Shutdown completed, goodbye!")
-            embed.setThumbnail(`${images.done}`)
-            embed.setFooter("client is now shut down")
-            reply.edit({embed})
-        }, 3500);
+          console.log('Powering off...'.magenta);
+          let mainembed = new Discord.RichEmbed();
+          mainembed.setAuthor(msg.author.username, msg.author.avatarURL)
+          mainembed.setTitle("Power off");
+          mainembed.setColor(0xff0000);
+          mainembed.setDescription(`Nova shut down on ${new Date()}`);
+          mainembed.setThumbnail(`${images.off}`);
+          mainembed.setFooter("to confirm shutdown please check the console");
+          channel.send(mainembed)
 
 
-        client.user.setStatus('invisible');
-        setTimeout(() =>{
-          process.exit(0);
-        }, 4000);
+          client.user.setStatus('invisible');
+          setTimeout(() =>{
+            console.clear()
+            process.exit(0);
+          }, 4000);
+        }, 5000);
+        msg.awaitReactions(function(reaction) {
+          if (reaction.count > 1 && reaction.users.has(requesterID)) return true;
+          return false;
+          }, {
+          max: 1
+          }).then(function() {
+          //Cancel the function
+          clearTimeout(timeout);
+          msg.clearReactions();
+          embed2.setThumbnail(`${images.cancel}`)
+          embed2.setFooter("Alright, I've cancelled the shutdown");
+          msg.edit(embed2);
+          });
+        });
       } else {
         msg.reply("Hold up! You aren't a dev! :thinking:");
         return;

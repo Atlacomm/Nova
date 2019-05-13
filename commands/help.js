@@ -4,8 +4,8 @@
  *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
  *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
  *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
- *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%#((%%%%*...........
- *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%%%%%%%%%...........
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
  *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
@@ -27,13 +27,21 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-const Discord = require('discord.js');
-const images = require('../images.json');
-const fs = require('fs');
+
 module.exports.run = async (client, message, args) => {
+  const Discord = require('discord.js');
+  const fs = require("fs")
+  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
+  let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  if(!prefixes[message.guild.id]){
+    prefixes[message.guild.id] = {
+      prefixes: settings.prefix
+    };
+  }
+  let prefix = prefixes[message.guild.id].prefixes
   const categories = [];
   const commands = Array.from(client.commands.keys());
-  const settings = require('../settings.json')
   commands.forEach(function(x) {
     if (!categories.includes(client.commands.get(x).help.category)) {
       categories.push(client.commands.get(x).help.category);
@@ -42,12 +50,12 @@ module.exports.run = async (client, message, args) => {
   
 
   if(message.guild){
-    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Nova doesn\'t have the permission to send embed links please enable them to use the full help.');
+    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Suzu doesn\'t have the permission to send embed links please enable them to use the full help.');
   }
   const embed = new Discord.RichEmbed()
-    .setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
+    .setAuthor(`Nova Help and on ${client.guilds.size} servers`, client.user.avatarURL)
     .setThumbnail(`${images.unknown}`)
-    .setDescription('Every command you input into Nova for this server is `' + require('../settings.json').prefix + '`')
+    .setDescription('Every command you input into Nova for this server is `' + prefix + '`')
     .setColor(0xE70056)
     .setFooter('Designed and Programed (with love) by Swingin30, Alee and TechLion Copyright 2019, Licensed with GPL-3.0');
 
