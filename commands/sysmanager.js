@@ -53,6 +53,8 @@ module.exports.run = async (client, msg) => {
   embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
   embed.addField("guilds", `${client.guilds.size}`)
   embed.addField("version", `This bot is running on nvaUX ${settings.version}`)
+  embed.addField(`Discord.js`, `v${version}`, true )
+  embed.addField(`Node`, `${process.version}`, true )
   embed.setFooter("Use "+prefix+"help to see all of my commands");
   msg.channel.send({embed}).then(function(msg) {
     let time = Date.now() - pingtime;
