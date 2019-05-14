@@ -51,7 +51,7 @@ module.exports.run = async (client, msg) => {
   embed.setThumbnail(`${images.cog}`)
   embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
   embed.addField("guilds", `${client.guilds.size}`)
-  embed.addField("version", `This bot is running on nvaUX ${version.version}`)
+  embed.addField("version", `This bot is running on nvaUX ${settings.version}`)
   embed.setFooter("Use "+prefix+"help to see all of my commands");
   msg.channel.send({embed}).then(function(msg) {
     let time = Date.now() - pingtime;
@@ -63,7 +63,7 @@ module.exports.run = async (client, msg) => {
 };
 
 exports.conf = {
-    aliases: [],
+    aliases: ["ping"],
     guildOnly: false,
   };
   exports.help = {
