@@ -236,8 +236,15 @@ client.on('message', msg => {
          return msg.channel.send(goembed)
       }
     }
+    function throwE(e){
+      let embed = new Discord.RichEmbed();
+      embed.setTitle("Error!");
+      embed.addField("Details: " + "``` " + e + "```");
+      embed.setFooter("Nova v" + settings.version);
+      console.error(e);
+    }
     try {
-      cmd.run(client, msg, args);
+      cmd.run(client, msg, args, throwE);
     }
     catch (e) {
       console.error(e);
