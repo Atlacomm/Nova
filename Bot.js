@@ -30,7 +30,7 @@
 const Discord = require('discord.js');
 const fs = require("fs");
 let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
-const colors = require("colors");
+//const colors = require("colors");
 let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
 const client = new Discord.Client();
 global.servers = {};
@@ -241,6 +241,8 @@ client.on('message', msg => {
       embed.setTitle("Error!");
       embed.addField("Details: " + "``` " + e + "```");
       embed.setFooter("Nova v" + settings.version);
+      embed.setColor("RED");
+        msg.channel.send(embed);
       console.error(e);
     }
     try {
