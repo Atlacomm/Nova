@@ -185,7 +185,7 @@ client.on('message', msg => {
   if (msg.author.bot) return;
   if(msg.content.startsWith("Jarvis") || msg.content.startsWith("Friday")){ //I love you 3000
     //msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
-    if(msg.content.substring(6).startsWith(" eliminate")) msg.channel.send("Summoning the Mark VI, sir");
+    if(msg.content.substring(6).startsWith(" eliminate")) msg.channel.send("Summoning the Mark IV, sir");
     if(msg.content.substring(6).startsWith(" critical systems status")){
       let embed = new Discord.RichEmbed
       embed.setTitle("System status")
