@@ -202,7 +202,7 @@ client.on('message', msg => {
         msg.edit({embed});
       });
     }
-    if(msg.content.substring(6).startsWith(" who are you")) msg.channel.send("I am based on the AI assitant from Iron Man. I also do things TechLion asks. Like taking out the trash. Speaking of... nva:kick <@558698226249760768>");
+    if(msg.content.substring(6).startsWith(" who are you")) msg.channel.send("I am based on the AI assistant from Iron Man. I also do things TechLion asks. Like taking out the trash. Speaking of... nva:kick <@558698226249760768>");
     return;
   }
   if(!prefixes[msg.guild.id]){
