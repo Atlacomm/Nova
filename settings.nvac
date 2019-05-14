@@ -1,4 +1,5 @@
 {
     "prefix": "nva:",
-    "version": "0.0.9"
+    "version": "0.0.9",
+    "color": "0xE70056"
 }

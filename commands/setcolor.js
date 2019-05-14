@@ -33,13 +33,21 @@ module.exports.run = async (client, msg, args) => {
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
   let requesterID = msg.author.id;
   if(!prefixes[msg.guild.id]){
     prefixes[msg.guild.id] = {
       prefixes: settings.prefix
     };
   }
+  if(!colors[msg.guild.id]){
+    colors[msg.guild.id] = {
+      colors: settings.color
+    };
+  }
   let prefix = prefixes[msg.guild.id].prefixes
+
+  let color = colors[msg.guild.id].colors
   if(!msg.member.hasPermission(0x00000008)){
     let fembed = new discord.RichEmbed
     fembed.setTitle("error")
@@ -49,14 +57,14 @@ module.exports.run = async (client, msg, args) => {
     fembed.setFooter("Use "+prefix+"help to see all of my commands");
     return msg.channel.send(fembed)
   }
-  if(!args[0]) return msg.reply("usage: "+prefix+"prefix <new prefix>")
+  if(!args[0]) return msg.reply("usage: "+prefix+"setcolor <hex color, example: 0xE70056>")
   if(args[0] == "help") return msg.reply("usage: "+prefix+"prefix <new prefix>")
   let embed = new discord.RichEmbed
   embed.setAuthor(msg.author.username, msg.author.avatarURL)
   embed.setTitle("awaiting comfirmation")
-  embed.setColor(0xE70056)
+  embed.setColor(`${color}`)
   embed.setThumbnail(`${images.timer5sec}`)
-  embed.setDescription(`Are you sure you want to change the bot prefix to \`${args[0]}\` serverwide? React with 🚫 to cancel if you change your mind.`)
+  embed.setDescription(`Are you sure you want to change the bot embed color to \`${args[0]}\` serverwide? React with 🚫 to cancel if you change your mind.`)
   embed.setFooter("Use "+prefix+"help to see all of my commands");
   await msg.channel.send(embed).then(function(msg) {
     msg.react('🚫');
@@ -65,14 +73,14 @@ module.exports.run = async (client, msg, args) => {
     msg.clearReactions();
     //code goes below
 
-    prefixes[msg.guild.id] = {
-      prefixes: args[0]
+    colors[msg.guild.id] = {
+      colors: args[0]
     };
-    fs.writeFile("./prefixes.nvac", JSON.stringify(prefixes), (err) => {
+    fs.writeFile("./colors.nvac", JSON.stringify(colors), (err) => {
       if (err) console.log(err)
     });
     embed.setThumbnail(`${images.done}`)
-    embed.setDescription(`Ok, the prefix is now \`${args[0]}\``)
+    embed.setDescription(`Ok, color is now \`${args[0]}\``)
     msg.edit(embed)
 
 
@@ -89,7 +97,7 @@ module.exports.run = async (client, msg, args) => {
     clearTimeout(timeout);
     msg.clearReactions();
     embed.setThumbnail(`${images.cancel}`)
-    embed.setDescription("The prefix change has been cancelled.")
+    embed.setDescription("The color change has been cancelled.")
     msg.edit(embed);
     });
   });
@@ -100,8 +108,8 @@ exports.conf = {
   guildOnly: true,
 };
 exports.help = {
-  name: 'prefix',
-  description: 'The prefix command',
-  usage: 'prefix',
+  name: 'setcolor',
+  description: 'The color command',
+  usage: 'setcolor',
   category: '- Configuration Commands',
 };

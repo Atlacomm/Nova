@@ -28,6 +28,7 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
+  const { version } = require("discord.js");
   const Discord = require('discord.js');
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
@@ -40,7 +41,6 @@ module.exports.run = async (client, msg) => {
   }
   let prefix = prefixes[msg.guild.id].prefixes
   const used = process.memoryUsage().heapUsed / 1024 / 1024;
-  let version = JSON.parse(fs.readFileSync("./version.nvac", "utf8"))
   let heartbeat = Math.round(client.ping)
   let pingtime = Date.now()
 
@@ -52,6 +52,8 @@ module.exports.run = async (client, msg) => {
   embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
   embed.addField("guilds", `${client.guilds.size}`)
   embed.addField("version", `This bot is running on nvaUX ${settings.version}`)
+  embed.addField(`Discord.js`, `v${version}`, true )
+  embed.addField(`Node`, `${process.version}`, true )
   embed.setFooter("Use "+prefix+"help to see all of my commands");
   msg.channel.send({embed}).then(function(msg) {
     let time = Date.now() - pingtime;
@@ -63,7 +65,7 @@ module.exports.run = async (client, msg) => {
 };
 
 exports.conf = {
-    aliases: ["ping"],
+    aliases: [],
     guildOnly: false,
   };
   exports.help = {
