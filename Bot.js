@@ -182,7 +182,7 @@ fs.readdir('./commands', (err, files) => {
 client.on('message', msg => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if (msg.author.bot) return;
-  if(msg.content.startsWith("Jarvis")){
+  if(msg.content.startsWith("Jarvis") || msg.content.startsWith("Friday")){ //I love you 3000
     msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
     return;
   }
