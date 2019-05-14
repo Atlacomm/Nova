@@ -28,6 +28,7 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
+  const { version } = require("discord.js");
   const Discord = require('discord.js');
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
