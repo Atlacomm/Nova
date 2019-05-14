@@ -33,16 +33,23 @@ module.exports.run = async (client, msg) => {
     let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
     let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
     let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+    let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
     if(!prefixes[msg.guild.id]){
       prefixes[msg.guild.id] = {
         prefixes: settings.prefix
       };
     }
+    if(!colors[msg.guild.id]){
+      colors[msg.guild.id] = {
+        colors: settings.color
+      };
+    }
+    let color = colors[msg.guild.id].colors
     let prefix = prefixes[msg.guild.id].prefixes
     let embed = new Discord.RichEmbed
     embed.setAuthor(msg.author.username, msg.author.avatarURL)
     embed.setTitle("General information");
-    embed.setColor(0xE70056);
+    embed.setColor(`${color}`);
     embed.setThumbnail(`${images.logo}`)
     embed.setDescription('Nova is a general purpose bot meant to fulfill all of the needs of the average Discord server.')
     embed.addField("Important information:", "this is the Alpha version of Nova and is not release ready. expect to find bugs")

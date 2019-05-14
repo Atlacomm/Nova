@@ -30,7 +30,8 @@
 const Discord = require('discord.js');
 const fs = require("fs");
 let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
-//const colors = require("colors");
+const col = require("colors");
+let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
 let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
 const client = new Discord.Client();
 global.servers = {};
@@ -101,7 +102,7 @@ fs.readdir('./commands', (err, files) => {
       }
       else if(heartbeat > 150){
         embed.setColor(0xff0000)
-        embed.addField(`Heartbeat: ${heartbeat}ms`, "Please contact a developer, you can use nova]about to see who to talk to about the issue")
+        embed.addField(`Heartbeat: ${heartbeat}ms`, "Please contact a developer, you can use suzu]about to see who to talk to about the issue")
       }
       msg.edit({embed})
     }, 1000);
@@ -111,7 +112,7 @@ fs.readdir('./commands', (err, files) => {
       msg.edit({embed});
     }, 1500);
     setTimeout(() => {
-      embed.addField("Post startup checks", "Any information about this can be seen below")
+      embed.addField("post startup checks", "Any information about this can be seen below")
       let pingtime = Date.now()
       embed.addField("Ping","Calculating ping...")
       msg.edit({embed}).then(function(msg) {
@@ -209,6 +210,13 @@ client.on('message', msg => {
       prefixes: settings.prefix
     };
   }
+  if(!colors[msg.guild.id]){
+    colors[msg.guild.id] = {
+      colors: settings.color
+    };
+  }
+
+  let color = colors[msg.guild.id].colors
 
   let prefix = prefixes[msg.guild.id].prefixes
 
@@ -242,14 +250,14 @@ client.on('message', msg => {
       embed.addField("Details: " + "``` " + e + "```");
       embed.setFooter("Nova v" + settings.version);
       embed.setColor("RED");
-        msg.channel.send(embed);
+      msg.channel.send(embed);
       console.error(e);
     }
     try {
-      cmd.run(client, msg, args, throwE);
+      cmd.run(client, msg, args);
     }
     catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
