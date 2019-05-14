@@ -183,7 +183,25 @@ client.on('message', msg => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if (msg.author.bot) return;
   if(msg.content.startsWith("Jarvis") || msg.content.startsWith("Friday")){ //I love you 3000
-    msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
+    //msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
+    if(msg.content.substring(6).startsWith("eliminate")) msg.channel.send("Summoning the Mark VI, sir");
+    if(msg.content.substring(6).startsWith("critical systems status")){
+      let embed = new Discord.RichEmbed
+      embed.setTitle("System status")
+      embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`)
+      embed.setColor(0xE70056);
+      embed.setThumbnail(`${images.cog}`)
+      embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
+      embed.addField("guilds", `${client.guilds.size}`)
+      embed.addField("version", `This bot is running on nvaUX ${settings.version}`)
+      embed.setFooter("Use "+prefix+"help to see all of my commands");
+      msg.channel.send({embed}).then(function(msg) {
+        let time = Date.now() - pingtime;
+        embed.setDescription(`Ping: ${time.toString()}ms\nHeartbeat: ${heartbeat}ms`)
+        msg.edit({embed});
+      });
+    }
+    if(msg.content.substring(6).startsWith("who are you")) msg.channel.send("I am based on the AI assitant from Iron Man. I also do things TechLion asks. Like taking out the trash. Speaking of... nva:kick <@558698226249760768>");
     return;
   }
   if(!prefixes[msg.guild.id]){
