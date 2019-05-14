@@ -33,16 +33,6 @@ module.exports.run = async (client, msg, args, throwE) => {
     let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
     if (msg.author.id != "472923135965003786" && msg.author.id != "299314446428274689" && msg.author.id != "242775871059001344") return;
     let code = args.join(" ");
-  
-    function throwE(e){
-      let embed = new Discord.RichEmbed();
-      embed.setTitle("Error!");
-      embed.addField("Details: " + "``` " + e + "```");
-      embed.setFooter("Nova v" + settings.version);
-      embed.setColor("RED");
-      msg.channel.send(embed);
-      console.error(e);
-    }
     
     try{
         let embed = new Discord.RichEmbed();

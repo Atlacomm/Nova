@@ -12,7 +12,7 @@
     Nova, A bot designed to fit into any discord server.
     Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.
 
-    Bot improvments by Alexander Lee
+    Bot improvments by Andrew Lee
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -247,14 +247,14 @@ client.on('message', msg => {
     function throwE(e){
       let embed = new Discord.RichEmbed();
       embed.setTitle("Error!");
-      embed.addField("Details: " + "``` " + e + "```");
+      embed.addField("Details: ", "``` " + e + "```");
       embed.setFooter("Nova v" + settings.version);
       embed.setColor("RED");
       msg.channel.send(embed);
       console.error(e);
     }
     try {
-      cmd.run(client, msg, args);
+      cmd.run(client, msg, args, throwE);
     }
     catch (e) {
       console.log(e);
