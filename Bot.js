@@ -33,7 +33,6 @@ let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
 const colors = require("colors");
 let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
 const client = new Discord.Client();
-let version = JSON.parse(fs.readFileSync("./version.nvac", "utf8"))
 global.servers = {};
 
 const activities_list = []; // creates an arraylist containing phrases you want your bot to switch through.
@@ -42,7 +41,7 @@ const activities_list = []; // creates an arraylist containing phrases you want 
   console.log(`Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.`.magenta);
   console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here :https://github.com/vicr123/AstralMod/'.magenta)
   console.log (`This is free software, and you are welcome to redistribute it`.magenta);
-  console.log(`This version of Nova runs on nvaUX ${version.version}`.magenta);
+  console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
 // Command Handler by jtsshieh and modified by Alee
 
@@ -102,7 +101,7 @@ fs.readdir('./commands', (err, files) => {
       }
       else if(heartbeat > 150){
         embed.setColor(0xff0000)
-        embed.addField(`Heartbeat: ${heartbeat}ms`, "Please contact a developer, you can use suzu]about to see who to talk to about the issue")
+        embed.addField(`Heartbeat: ${heartbeat}ms`, "Please contact a developer, you can use nova]about to see who to talk to about the issue")
       }
       msg.edit({embed})
     }, 1000);
@@ -112,7 +111,7 @@ fs.readdir('./commands', (err, files) => {
       msg.edit({embed});
     }, 1500);
     setTimeout(() => {
-      embed.addField("post startup checks", "Any information about this can be seen below")
+      embed.addField("Post startup checks", "Any information about this can be seen below")
       let pingtime = Date.now()
       embed.addField("Ping","Calculating ping...")
       msg.edit({embed}).then(function(msg) {
@@ -122,7 +121,7 @@ fs.readdir('./commands', (err, files) => {
     });
     }, 2000);
     setTimeout(() => {
-      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${version.version}`)
+      embed.addField(`nvaUX version`, `this bot is running on nvaUX ${settings.version}`)
       embed.setThumbnail(`${images.done}`)
       msg.edit({embed})
       clearInterval(twirlTimer)
@@ -183,6 +182,10 @@ fs.readdir('./commands', (err, files) => {
 client.on('message', msg => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if (msg.author.bot) return;
+  if(msg.content.startsWith("Jarvis")){
+    msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
+    return;
+  }
   if(!prefixes[msg.guild.id]){
     prefixes[msg.guild.id] = {
       prefixes: settings.prefix
