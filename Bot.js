@@ -251,7 +251,7 @@ client.on('message', msg => {
     function throwE(e){
       let embed = new Discord.RichEmbed();
       embed.setTitle("Error!");
-      embed.addField("Details: ", "``` " + e + "```");
+      embed.addField("Details: ", "```" + e + "```");
       embed.setFooter("Nova v" + settings.version);
       embed.setColor("RED");
       msg.channel.send(embed);
