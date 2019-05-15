@@ -169,16 +169,6 @@ fs.readdir('./commands', (err, files) => {
     .catch(console.error);
   }, 120000);
   
-  setInterval(() => 
-  {
-    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
-    client.user.setActivity(activities_list[index]);
-  }, 10000);
-  client.guilds.forEach((guild) => {
-    console.log(" - " + guild.name)
-    
-  
-});
 
 client.on('message', msg => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))

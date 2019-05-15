@@ -62,12 +62,13 @@ module.exports.run = async (client, msg, args, throwE) => {
     }
     try{
         let num = parseInt(args.join(" "), 10)
-        if(1 > num > 99){
-          throwE(`It needs to be 1-99`)
+        if(num > 100 || num < 1){
+          return throwE(`It needs to be 1-99`)
         }
         msg.delete(); //Delete the command
         msg.channel.bulkDelete(num, true);
         let embed = new Discord.RichEmbed
+        console.log(num)
         embed.setTitle("done!")
         embed.setColor(color)
         embed.setThumbnail(`${images.delete}`)
