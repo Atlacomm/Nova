@@ -40,7 +40,7 @@ module.exports.run = async (client, msg) => {
     };
   }
   let prefix = prefixes[msg.guild.id].prefixes
-  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  let used = process.memoryUsage().heapUsed / 1024 / 1024;
   let heartbeat = Math.round(client.ping)
   let pingtime = Date.now()
 
