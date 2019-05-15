@@ -35,7 +35,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       let user = msg.mentions.users.first();
         const member = msg.guild.member(user);
         if (member) {
-          member.kick('Kicked by ' + msg.author.username + ' using Suzu.').then(() => {
+          member.kick('Kicked by ' + msg.author.username + ' using Nova.').then(() => {
             msg.reply(`Successfully kicked ${user.tag}`);
           }).catch(err => {
             throwE(err)
