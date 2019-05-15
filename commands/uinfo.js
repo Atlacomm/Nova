@@ -23,7 +23,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       var prefix = `${settings.prefix}`
       var color = `${settings.color}`
     }
-    
+
   if (!args[0]) {
     person = person = message.guild.member(message.author);
     let embed = new Discord.RichEmbed()
@@ -58,7 +58,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 
 exports.conf = {
   aliases: ["user"],
-  guildOnly: false,
+  guildOnly: true,
 };
 exports.help = {
   name: 'uinfo',
