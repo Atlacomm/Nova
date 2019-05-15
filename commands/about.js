@@ -34,18 +34,23 @@ module.exports.run = async (client, msg) => {
     let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
     let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
     let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
-    if(!prefixes[msg.guild.id]){
-      prefixes[msg.guild.id] = {
-        prefixes: settings.prefix
-      };
+    if(msg.guild){
+      if(!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+          prefixes: settings.prefix
+        };
+      }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
+      var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
+    } else {
+      var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
     }
-    if(!colors[msg.guild.id]){
-      colors[msg.guild.id] = {
-        colors: settings.color
-      };
-    }
-    let color = colors[msg.guild.id].colors
-    let prefix = prefixes[msg.guild.id].prefixes
     let embed = new Discord.RichEmbed
     embed.setAuthor(msg.author.username, msg.author.avatarURL)
     embed.setTitle("General information");

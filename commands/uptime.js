@@ -10,7 +10,7 @@
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
  *
- *   Command here: Command for Nova
+ *   Uptime: Command for Nova
  *   Copyright (C) 2019 Designed and Programed by Swingin30 and Techlion
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -34,12 +34,16 @@ module.exports.run = async (client, msg, args, throwE) => {
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   try{
-  if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
-  }
-  let prefix = prefixes[msg.guild.id].prefixes
+    if(msg.guild){
+      if(!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+          prefixes: settings.prefix
+        };
+      }
+      var prefix = prefixes[msg.guild.id].prefixes
+    } else {
+      var prefix = `${settings.prefix}`
+    }
     uptime = client.uptime;
     var seconds = Math.round(uptime / 1000)
     var minutes = 0

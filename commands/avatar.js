@@ -33,12 +33,16 @@ module.exports.run = async (client, msg) => {
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
-  if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
+  if(msg.guild){
+    if(!prefixes[msg.guild.id]){
+      prefixes[msg.guild.id] = {
+        prefixes: settings.prefix
+      };
+    }
+    var prefix = prefixes[msg.guild.id].prefixes
+  } else {
+    var prefix = `${settings.prefix}`
   }
-  let prefix = prefixes[msg.guild.id].prefixes
   let user = msg.mentions.users.first();
     if (user) {
       const member = msg.guild.member(user);

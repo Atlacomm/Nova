@@ -13,5 +13,6 @@
     "cog": "https://github.com/software-elevated/Nova/blob/master/icons/cog.png?raw=true",
     "theme": "https://github.com/software-elevated/Nova/blob/master/icons/theme.png?raw=true",
     "cancel": "https://github.com/software-elevated/Nova/blob/master/icons/cancel.png?raw=true",
-    "ping" : "https://github.com/software-elevated/Nova/blob/master/icons/ping.png?raw=true"
+    "ping" : "https://github.com/software-elevated/Nova/blob/master/icons/ping.png?raw=true",
+    "delete": "https://github.com/software-elevated/Nova/blob/master/icons/delete.png?raw=true"
 }

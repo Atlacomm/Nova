@@ -36,12 +36,16 @@ module.exports.run = async (client, msg, args, throwE) => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   
   try{
-    if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
-  }
-  let prefix = prefixes[msg.guild.id].prefixes
+    if(msg.guild){
+      if(!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+          prefixes: settings.prefix
+        };
+      }
+      var prefix = prefixes[msg.guild.id].prefixes
+    } else {
+      var prefix = `${settings.prefix}`
+    }
   const categories = [];
   const commands = Array.from(client.commands.keys());
   commands.forEach(function(x) {
