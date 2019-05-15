@@ -27,10 +27,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg) => {
-    const Discord = require('discord.js');
+module.exports.run = async (client, msg, args, throwE) => {
+  const Discord = require('discord.js');
     const fs = require("fs")
     let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+    try{
     let requesterID = msg.author.id;
     if (msg.author.id == "472923135965003786" || msg.author.id == "299314446428274689" || msg.author.id == "242775871059001344"){
         let channel = client.channels.find(ch => ch.id === '539142431552176139'); 
@@ -85,6 +86,9 @@ module.exports.run = async (client, msg) => {
         msg.reply("Hold up! You aren't a dev! :thinking:");
         return;
       }
+    }catch(e){
+      throwE(e)
+    }
 };
 
 exports.conf = {

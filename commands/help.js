@@ -28,13 +28,15 @@
  *
  * ***********************************************************************************************/
 
-module.exports.run = async (client, message, args) => {
-  const Discord = require('discord.js');
+module.exports.run = async (client, msg, args, throwE) => {
+    const Discord = require('discord.js');
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
-  if(!prefixes[message.guild.id]){
+  
+  try{
+    if(!prefixes[message.guild.id]){
     prefixes[message.guild.id] = {
       prefixes: settings.prefix
     };
@@ -50,10 +52,10 @@ module.exports.run = async (client, message, args) => {
   
 
   if(message.guild){
-    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Suzu doesn\'t have the permission to send embed links please enable them to use the full help.');
+    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Nova doesn\'t have the permission to send embed links please enable them to use the full help.');
   }
   const embed = new Discord.RichEmbed()
-    .setAuthor(`Nova Help and on ${client.guilds.size} servers`, client.user.avatarURL)
+    .setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
     .setThumbnail(`${images.unknown}`)
     .setDescription('Every command you input into Nova for this server is `' + prefix + '`')
     .setColor(0xE70056)
@@ -69,6 +71,9 @@ module.exports.run = async (client, message, args) => {
     embed.addField(x, cat, true)
   });
   message.channel.send({embed})
+} catch(e){
+  throwE(e)
+}
 };
 
 exports.conf = {
