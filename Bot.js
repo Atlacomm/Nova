@@ -188,6 +188,10 @@ client.on('message', msg => {
     if(msg.content.substring(6).startsWith(" eliminate")) msg.channel.send("Summoning the Mark IV, sir");
     if(msg.content.substring(6).startsWith(" critical systems status")){
       let embed = new Discord.RichEmbed
+      let prefix = prefixes[msg.guild.id].prefixes
+      let used = process.memoryUsage().heapUsed / 1024 / 1024;
+      let heartbeat = Math.round(client.ping)
+      let pingtime = Date.now()
       embed.setTitle("System status")
       embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`)
       embed.setColor(0xE70056);
