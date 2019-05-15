@@ -169,26 +169,34 @@ fs.readdir('./commands', (err, files) => {
     .catch(console.error);
   }, 120000);
   
-  setInterval(() => 
-  {
-    const index = Math.floor(Math.random() * (activities_list.length - 1) + 1);
-    client.user.setActivity(activities_list[index]);
-  }, 10000);
-  client.guilds.forEach((guild) => {
-    console.log(" - " + guild.name)
-    
-  
-});
 
 client.on('message', msg => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   if (msg.author.bot) return;
+  if(msg.guild){
+    if(!prefixes[msg.guild.id]){
+      prefixes[msg.guild.id] = {
+        prefixes: settings.prefix
+      };
+    }
+    if(!colors[msg.guild.id]){
+      colors[msg.guild.id] = {
+        colors: settings.color
+      };
+    }
+  
+    var color = colors[msg.guild.id].colors
+  
+    var prefix = prefixes[msg.guild.id].prefixes
+  } else {
+    var prefix = `${settings.prefix}`
+    var color = `${settings.color}`
+  }
   if(msg.content.startsWith("Jarvis") || msg.content.startsWith("Friday")){ //I love you 3000
     //msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
     if(msg.content.substring(6).startsWith(" eliminate")) msg.channel.send("Summoning the Mark IV, sir");
     if(msg.content.substring(6).startsWith(" critical systems status")){
       let embed = new Discord.RichEmbed
-      let prefix = prefixes[msg.guild.id].prefixes
       let used = process.memoryUsage().heapUsed / 1024 / 1024;
       let heartbeat = Math.round(client.ping)
       let pingtime = Date.now()
@@ -209,20 +217,6 @@ client.on('message', msg => {
     if(msg.content.substring(6).startsWith(" who are you")) msg.channel.send("I am based on the AI assistant from Iron Man. I also do things TechLion asks. Like taking out the trash. Speaking of... nva:kick <@558698226249760768>");
     return;
   }
-  if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
-  }
-  if(!colors[msg.guild.id]){
-    colors[msg.guild.id] = {
-      colors: settings.color
-    };
-  }
-
-  let color = colors[msg.guild.id].colors
-
-  let prefix = prefixes[msg.guild.id].prefixes
 
   if (!msg.content.startsWith(prefix)) return;
   const args = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -233,6 +227,15 @@ client.on('message', msg => {
     cmd = client.commands.get(command);
   } else if (client.aliases.has(command)) {
     cmd = client.commands.get(client.aliases.get(command));
+  } else {
+    let embed = new Discord.RichEmbed
+    embed.setAuthor(msg.author.username, msg.author.avatarURL)
+    embed.setTitle("Unknown command")
+    embed.setThumbnail(`${images.unknown}`)
+    embed.setDescription(`There was an error processing that, we couldn't find the command \`${prefix}${command}\`, if you feel this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`)
+    embed.setFooter("Nova v" + settings.version);
+    embed.setColor("RED");
+    return msg.channel.send(embed)
   }
 
   if (cmd) {
@@ -250,9 +253,10 @@ client.on('message', msg => {
     }
     function throwE(e){
       let embed = new Discord.RichEmbed();
-      embed.setTitle("Error!");
-      embed.addField("Details: ", "```" + e + "```");
-      embed.setFooter("Nova v" + settings.version);
+      embed.setTitle("An error has occured.");
+      embed.setThumbnail(`${images.error}`)
+      embed.addField("We... had a bit of trouble processing that, here's why: ", "```" + e + "```");
+      embed.setFooter("Nova v" + settings.version)+". If you want you can report this error [here](https://discord.gg/RFXArBN)";
       embed.setColor("RED");
       msg.channel.send(embed);
       console.error(e);

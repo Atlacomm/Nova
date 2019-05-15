@@ -1,5 +1,9 @@
 {
     "prefix": "nva:",
+<<<<<<< HEAD
     "version": "0.0.10",
+=======
+    "version": "0.0.11",
+>>>>>>> 88f2ce9511e7a6cb40ac9f13c2e5ec4617a824f4
     "color": "0xE70056"
 }

@@ -34,12 +34,16 @@ module.exports.run = async (client, msg, args, throwE) => {
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   try{
-  if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
-  }
-  let prefix = prefixes[msg.guild.id].prefixes
+    if(msg.guild){
+      if(!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+          prefixes: settings.prefix
+        };
+      }
+      var prefix = prefixes[msg.guild.id].prefixes
+    } else {
+      var prefix = `${settings.prefix}`
+    }
   let embed = new Discord.RichEmbed
   embed.setAuthor(msg.author.username, msg.author.avatarURL)
   embed.setTitle("Displaying theme information")
