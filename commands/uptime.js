@@ -10,7 +10,7 @@
  *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
  *...............................................................................
  *
- *   Uptime: Command for Nova
+ *   Command here: Command for Nova
  *   Copyright (C) 2019 Designed and Programed by Swingin30 and Techlion
  *
  *   This program is free software: you can redistribute it and/or modify

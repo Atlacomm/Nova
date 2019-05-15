@@ -36,12 +36,12 @@ module.exports.run = async (client, msg, args, throwE) => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   
   try{
-    if(!prefixes[message.guild.id]){
-    prefixes[message.guild.id] = {
+    if(!prefixes[msg.guild.id]){
+    prefixes[msg.guild.id] = {
       prefixes: settings.prefix
     };
   }
-  let prefix = prefixes[message.guild.id].prefixes
+  let prefix = prefixes[msg.guild.id].prefixes
   const categories = [];
   const commands = Array.from(client.commands.keys());
   commands.forEach(function(x) {
@@ -51,8 +51,8 @@ module.exports.run = async (client, msg, args, throwE) => {
   });
   
 
-  if(message.guild){
-    if (!message.guild.member(client.user).hasPermission('EMBED_LINKS')) return message.reply('ERROR: Nova doesn\'t have the permission to send embed links please enable them to use the full help.');
+  if(msg.guild){
+    if (!msg.guild.member(client.user).hasPermission('EMBED_LINKS')) return msg.reply('ERROR: Nova doesn\'t have the permission to send embed links please enable them to use the full help.');
   }
   const embed = new Discord.RichEmbed()
     .setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
@@ -70,7 +70,7 @@ module.exports.run = async (client, msg, args, throwE) => {
     });
     embed.addField(x, cat, true)
   });
-  message.channel.send({embed})
+  msg.channel.send({embed})
 } catch(e){
   throwE(e)
 }

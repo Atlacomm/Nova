@@ -31,12 +31,29 @@ module.exports.run = async (client, msg, args, throwE) => {
     const Discord = require('discord.js');
     const fs = require("fs");
     let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
+    if(!msg.member.hasPermission("KICK_MEMBERS")){
+      let fembed = new discord.RichEmbed
+      fembed.setTitle("error")
+      fembed.setColor(0xff0000)
+      fembed.setThumbnail(`${images.error}`)
+      fembed.setDescription(`You do not have sufficient permissions to run this command. Please talk to a server administrator. If you think this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`)
+      fembed.setFooter("Use "+prefix+"help to see all of my commands");
+      return msg.channel.send(fembed)
+    }
     try{
-        if (!msg.member.hasPermission("KICK_MEMBERS")) return msg.reply("Nope.");
         let num = parseInt(args.join(" "), 10)
+        if(1 > num > 99){
+          throwE(`It needs to be 1-99`)
+        }
         msg.delete(); //Delete the command
         msg.channel.bulkDelete(num, true);
-        msg.reply("Done! I did my best to delete " + num + " messages!");
+        let fembed = new discord.RichEmbed
+        embed.setTitle("done!")
+        embed.setColor(0xff0000)
+        embed.setThumbnail(`${images.error}`)
+        embed.setDescription(`You do not have sufficient permissions to run this command. Please talk to a server administrator. If you think this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`)
+        embed.setFooter("Use "+prefix+"help to see all of my commands");
+        msg.channel.send(embed)
     }catch(e){
         throwE(e)
     }
