@@ -27,12 +27,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg) => {
+module.exports.run = async (client, msg, args, throwE) => {
   const Discord = require('discord.js');
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  try{
   if(!prefixes[msg.guild.id]){
     prefixes[msg.guild.id] = {
       prefixes: settings.prefix
@@ -65,6 +66,9 @@ module.exports.run = async (client, msg) => {
     embed.setThumbnail(`${images.clock}`)
     embed.setFooter("Use "+prefix+"help to see all of my commands")
     await msg.channel.send({embed});
+  }catch(e){
+    throwE(e)
+  }
  };
 
 exports.conf = {

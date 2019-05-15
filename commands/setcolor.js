@@ -27,7 +27,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg, args) => {
+module.exports.run = async (client, msg, args, throwE) => {
   const discord = require("discord.js");
   const fs = require("fs");
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
@@ -35,7 +35,8 @@ module.exports.run = async (client, msg, args) => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
   let requesterID = msg.author.id;
-  if(!prefixes[msg.guild.id]){
+  try{
+    if(!prefixes[msg.guild.id]){
     prefixes[msg.guild.id] = {
       prefixes: settings.prefix
     };
@@ -100,7 +101,11 @@ module.exports.run = async (client, msg, args) => {
     embed.setDescription("The color change has been cancelled.")
     msg.edit(embed);
     });
+    
   });
+}catch(e){
+  throwE(e);
+}
 };
 
 exports.conf = {

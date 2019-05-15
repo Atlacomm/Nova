@@ -1,22 +1,17 @@
 /************************************************************************************************
- * /////////////////////    |||               |||   /////////////////////   |||               |||
- * |||                      |||               |||                     |||   |||               |||
- * |||                      |||               |||                     |||   |||               |||
- * |||                      |||               |||                     |||   |||               |||
- * |||                      |||               |||                     |||   |||               |||
- * |||                      |||               |||                     |||   |||               |||
- * /////////////////////    |||               |||   /////////////////////   |||               |||
- *                   |||    |||               |||   |||                     |||               |||
- *                   |||    |||               |||   |||                     |||               |||
- *                   |||    |||               |||   |||                     |||               |||
- *                   |||    |||               |||   |||                     |||               |||
- *                   |||    |||               |||   |||                     |||               |||
- * /////////////////////    |||///////////////|||   /////////////////////   |||///////////////|||
+ *...............................................................................
+ *..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............
+ *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
+ *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
+ *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
+ *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
+ *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
+ *...............................................................................
  *
- * 
- * 
- *   Kick: Command for Suzu
- *   Copyright (C) 2019 Designed and Programed by Ree and ServerLion
+ *   Command here: Command for Nova
+ *   Copyright (C) 2019 Designed and Programed by Swingin30 and Techlion
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,9 +26,9 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * *************************************/
-module.exports.run = async (client, msg) => {
-    if (!msg.member.hasPermission("KICK_MEMBERS")){
+ * ***********************************************************************************************/
+module.exports.run = async (client, msg, args, throwE) => {
+      if (!msg.member.hasPermission("KICK_MEMBERS")){
         msg.reply("Hold up! You aren't allowed to kick members!");
         return;
       }
@@ -43,8 +38,7 @@ module.exports.run = async (client, msg) => {
           member.kick('Kicked by ' + msg.author.username + ' using Suzu.').then(() => {
             msg.reply(`Successfully kicked ${user.tag}`);
           }).catch(err => {
-            msg.reply('I was unable to kick the member');
-            console.error(err);
+            throwE(err)
           });
       }
 };
