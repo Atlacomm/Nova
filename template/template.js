@@ -27,7 +27,10 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg) => {
+module.exports.run = async (client, msg, args, throwE) => {
+  const Discord = require('discord.js');
+  const fs = require("fs");
+  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
   
 };
 
