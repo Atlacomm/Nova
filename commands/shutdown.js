@@ -31,6 +31,7 @@ module.exports.run = async (client, msg, args, throwE) => {
   const Discord = require('discord.js');
     const fs = require("fs")
     let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+    let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
     let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
     let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
     if(msg.guild){
