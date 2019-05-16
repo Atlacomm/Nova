@@ -24,34 +24,46 @@ module.exports.run = async (client, msg, args, throwE) => {
     }
 
   if (!args[0]) {
-    person = person = message.guild.member(message.author);
+    person = person = msg.guild.member(msg.author);
     let embed = new Discord.RichEmbed()
-    .setTitle("User Information Lookup")
-    .setDescription("Very Interesting...")
-    .addField("Username", (person.user.tag), true)
-    .addField("Display Name", (person.displayName), true)
-    .addField("Highest Role", (person.highestRole), true)
-    .addField("Current Voice Channel", (person.voiceChannel), true)
-    .addField("Joined Discord On", (person.user.createdAt))
-    .addField("Joined Guild On", (person.joinedAt))
-    .setThumbnail(person.user.avatarURL)
-    .setFooter("Use "+prefix+"help to see all of my commands");
-    message.channel.send( {embed} )
+    embed.setTitle("User Information Lookup")
+    embed.setColor(color)
+    embed.setDescription("Very Interesting...")
+    embed.addField("Username", (person.user.tag), true)
+    embed.addField("Display Name", (person.displayName), true)
+    embed.addField("Highest Role", (person.highestRole), true)
+    if(person.voiceChannel = null){
+      var vchannel = "None"
+    } else {
+      var vchannel = `${person.voiceChannel}`
+    }
+    embed.addField("Current Voice Channel", `${vchannel}`, true)
+    embed.addField("Joined Discord On", (person.user.createdAt))
+    embed.addField("Joined Guild On", (person.joinedAt))
+    embed.setThumbnail(person.user.avatarURL)
+    embed.setFooter("Use "+prefix+"help to see all of my commands");
+    msg.channel.send( {embed} )
   } else {
-    person = message.guild.member(message.mentions.users.first());
+    person = msg.guild.member(msg.mentions.users.first());
     let embed = new Discord.RichEmbed()
-    .setTitle("User Information Lookup")
-    .setDescription("Very Interesting...")
-    .addField("Username", (person.user.tag), true)
-    .addField("Display Name", (person.displayName), true)
-    .addField("Highest Role", (person.highestRole), true)
-    .addField("Current Voice Channel", (person.voiceChannel), true)
-    .addField("Joined Discord On", (person.user.createdAt))
-    .addField("Joined Guild On", (person.joinedAt))
-    .setThumbnail(person.user.avatarURL)
-    .setFooter("Use "+prefix+"help to see all of my commands");
+    embed.setTitle("User Information Lookup")
+    embed.setColor(color)
+    embed.setDescription("Very Interesting...")
+    embed.addField("Username", (person.user.tag), true)
+    embed.addField("Display Name", (person.displayName), true)
+    embed.addField("Highest Role", (person.highestRole), true)
+    if(person.voiceChannel = undefined){
+      var vchannel = "None"
+    } else {
+      var vchannel = `${person.voiceChannel}`
+    }
+    embed.addField("Current Voice Channel", vchannel, true)
+    embed.addField("Joined Discord On", (person.user.createdAt))
+    embed.addField("Joined Guild On", (person.joinedAt))
+    embed.setThumbnail(person.user.avatarURL)
+    embed.setFooter("Use "+prefix+"help to see all of my commands");
 
-    message.channel.send( {embed} )
+    msg.channel.send( {embed} )
   }
 };
 

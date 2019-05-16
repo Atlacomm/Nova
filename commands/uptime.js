@@ -33,6 +33,7 @@ module.exports.run = async (client, msg, args, throwE) => {
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
   try{
     if(msg.guild){
       if(!prefixes[msg.guild.id]){
@@ -40,9 +41,16 @@ module.exports.run = async (client, msg, args, throwE) => {
           prefixes: settings.prefix
         };
       }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
       var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
     } else {
       var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
     }
     uptime = client.uptime;
     var seconds = Math.round(uptime / 1000)
@@ -66,7 +74,7 @@ module.exports.run = async (client, msg, args, throwE) => {
     embed.setTitle("Current client uptime")
     embed.setAuthor(msg.author.username, msg.author.avatarURL)
     embed.addField(`Nova has been online for:`,  `${days} Days, ${hours} Hours, ${minutes} Minutes, and ${seconds} Seconds.`)
-    embed.setColor(0xE70056)
+    embed.setColor(color)
     embed.setThumbnail(`${images.clock}`)
     embed.setFooter("Use "+prefix+"help to see all of my commands")
     await msg.channel.send({embed});

@@ -36,15 +36,24 @@ module.exports.run = async (client, msg, args, throwE) => {
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   
   try{
+    let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+    let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
     if(msg.guild){
       if(!prefixes[msg.guild.id]){
         prefixes[msg.guild.id] = {
           prefixes: settings.prefix
         };
       }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
       var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
     } else {
       var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
     }
   const categories = [];
   const commands = Array.from(client.commands.keys());
@@ -62,7 +71,7 @@ module.exports.run = async (client, msg, args, throwE) => {
     .setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
     .setThumbnail(`${images.unknown}`)
     .setDescription('Every command you input into Nova for this server is `' + prefix + '`')
-    .setColor(0xE70056)
+    .setColor(color)
     .setFooter('Designed and Programed (with love) by Swingin30, Alee and TechLion Copyright 2019, Licensed with GPL-3.0');
 
   categories.forEach(function(x) {

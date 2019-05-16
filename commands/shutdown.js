@@ -31,6 +31,25 @@ module.exports.run = async (client, msg, args, throwE) => {
   const Discord = require('discord.js');
     const fs = require("fs")
     let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
+    let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+    let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
+    if(msg.guild){
+      if(!prefixes[msg.guild.id]){
+        prefixes[msg.guild.id] = {
+          prefixes: settings.prefix
+        };
+      }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
+      var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
+    } else {
+      var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
+    }
     try{
     let requesterID = msg.author.id;
     if (msg.author.id == "472923135965003786" || msg.author.id == "299314446428274689" || msg.author.id == "242775871059001344"){
@@ -38,7 +57,7 @@ module.exports.run = async (client, msg, args, throwE) => {
         let embed2 = new Discord.RichEmbed();
         embed2.setTitle("Shutdown")
         embed2.setThumbnail(`${images.timer5sec}`)
-        embed2.setColor(0xE70056)
+        embed2.setColor(color)
         embed2.setDescription("The shutdown command was initiated. If you want to cancel this operation, you have 5 seconds to react with 🚫 to cancel the operation.")
         await msg.channel.send(embed2).then(function(msg) {
           msg.react('🚫');

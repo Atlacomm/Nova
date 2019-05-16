@@ -35,15 +35,24 @@ module.exports.run = async (client, msg, args, throwE) => {
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
   let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
   try{
+    let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+    let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
     if(msg.guild){
       if(!prefixes[msg.guild.id]){
         prefixes[msg.guild.id] = {
           prefixes: settings.prefix
         };
       }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
       var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
     } else {
       var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
     }
   let used = process.memoryUsage().heapUsed / 1024 / 1024;
   let heartbeat = Math.round(client.ping)
@@ -52,7 +61,7 @@ module.exports.run = async (client, msg, args, throwE) => {
   let embed = new Discord.RichEmbed
   embed.setTitle("System status")
   embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`)
-  embed.setColor(0xE70056);
+  embed.setColor(color);
   embed.setThumbnail(`${images.cog}`)
   embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`)
   embed.addField("guilds", `${client.guilds.size}`)

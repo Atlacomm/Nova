@@ -32,7 +32,8 @@ module.exports.run = async (client, msg, args, throwE) => {
   const fs = require("fs")
   let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
   let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
   try{
     if(msg.guild){
       if(!prefixes[msg.guild.id]){
@@ -40,14 +41,21 @@ module.exports.run = async (client, msg, args, throwE) => {
           prefixes: settings.prefix
         };
       }
+      if(!colors[msg.guild.id]){
+        colors[msg.guild.id] = {
+          colors: settings.color
+        };
+      }
       var prefix = prefixes[msg.guild.id].prefixes
+      var color = colors[msg.guild.id].colors
     } else {
       var prefix = `${settings.prefix}`
+      var color = `${settings.color}`
     }
   let embed = new Discord.RichEmbed
   embed.setAuthor(msg.author.username, msg.author.avatarURL)
   embed.setTitle("Displaying theme information")
-  embed.setColor(0xE70056)
+  embed.setColor(color)
   embed.setThumbnail(`${images.theme}`)
   embed.setDescription("Hex color: 0xE70056\n[icons](https://github.com/software-elevated/Nova/blob/master/icons)\n[Icon template](https://www.dropbox.com/s/4rnntx4vkhd5zi7/nova%20frame.blend?dl=0)")
   msg.channel.send(embed);

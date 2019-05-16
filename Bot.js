@@ -233,7 +233,7 @@ client.on('message', msg => {
     embed.setTitle("Unknown command")
     embed.setThumbnail(`${images.unknown}`)
     embed.setDescription(`There was an error processing that, we couldn't find the command \`${prefix}${command}\`, if you feel this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`)
-    embed.setFooter("Nova v" + settings.version);
+    embed.setFooter("nvaUX" + settings.version);
     embed.setColor("RED");
     return msg.channel.send(embed)
   }
@@ -306,7 +306,7 @@ client.on('guildMemberAdd', member => {
     channel.send(":hammer: Banned User: " + user.tag)
   });
   client.on('guildBanRemove', (guild, user) => {
-    if (user.guild.id != "537101504864190464") return;
+    if (guild.id != "537101504864190464") return;
     let channel = client.channels.find(ch => ch.id === '539142431552176139');
     channel.send(":no_entry_sign: :hammer: Unbanned User: " + user.tag)
   });
