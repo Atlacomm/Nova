@@ -54,6 +54,10 @@ module.exports.run = async (client, msg, args, throwE) => {
       var prefix = `${settings.prefix}`;
       var color = `${settings.color}`;
   }
+  if (!msg.member.hasPermission("KICK_MEMBERS")){
+    msg.reply("Hold up! You aren't allowed to change log channels!");
+    return;
+  }
   if(args[0] == "none") {
       serverConf.member[msg.guild.id] = {
           member: "none"
