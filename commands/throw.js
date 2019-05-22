@@ -28,20 +28,20 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-    const Discord = require('discord.js');
-    const fs = require("fs");
-    let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
+	const Discord = require("discord.js");
+	const fs = require("fs");
+	let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
 
-    let error = args.join(" ");
-    throwE(error);
+	let error = args.join(" ");
+	throwE(error);
 };
 
 exports.conf = {
-  aliases: [],
-  guildOnly: false,
+	aliases: [],
+	guildOnly: false,
 };
 exports.help = {
-  name: 'throw',
-  description: 'Throws an error',
-  usage: 'nva:throw (error)',
-  category: '- Developer Commands'}
+	name: "throw",
+	description: "Throws an error",
+	usage: "nva:throw (error)",
+	category: "- Developer Commands"};

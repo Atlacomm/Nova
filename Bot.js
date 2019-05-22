@@ -33,6 +33,7 @@ let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
 const col = require("colors");
 let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
 let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
+let serverConf = JSON.parse(fs.readFileSync("./serverConf.nvac", "utf8"))
 const client = new Discord.Client();
 global.servers = {};
 
@@ -40,8 +41,8 @@ const activities_list = []; // creates an arraylist containing phrases you want 
   console.clear()
   console.log("...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................".magenta)
   console.log(`Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.`.magenta);
-  console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here :https://github.com/vicr123/AstralMod/'.magenta)
-  console.log (`This is free software, and you are welcome to redistribute it`.magenta);
+  console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta)
+  console.log(`This is free software, and you are welcome to redistribute it`.magenta);
   console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
 // Command Handler by jtsshieh and modified by Alee
@@ -58,7 +59,6 @@ fs.readdir('./commands', (err, files) => {
       process.stdout.clearLine();
       process.stdout.cursorTo(0);
       process.stdout.write(`attempting to load the command "${command.help.name}".`.cyan);
-      //console.log(`Attempting to load the command "${command.help.name}".`.cyan);
       client.commands.set(command.help.name, command);
     }
     catch (err) {
@@ -130,7 +130,6 @@ fs.readdir('./commands', (err, files) => {
       process.stdout.cursorTo(0);
       console.log(`Logged in as ${client.user.tag}`.green);
     }, 2500);
-    //TODO: UINFO
     //TODO: LOGGING
     //TODO: TIMERS
     //TODO: NOTE TAKING
@@ -171,7 +170,7 @@ fs.readdir('./commands', (err, files) => {
   
 
 client.on('message', msg => {
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))  
   if (msg.author.bot) return;
   if(msg.guild){
     if(!prefixes[msg.guild.id]){
@@ -184,6 +183,24 @@ client.on('message', msg => {
         colors: settings.color
       };
     }
+    if(!serverConf.messages[msg.guild.id]){
+      serverConf.messages[msg.guild.id] = {
+        messages: "none"
+      };
+      fs.writeFile("./serverConf.nvac", JSON.stringify(serverConf), (err) => {
+        if (err) console.log(err)
+      });
+    }
+      if(!serverConf.member[msg.guild.id]){
+        serverConf.member[msg.guild.id] = {
+          member: "none"
+        };
+        fs.writeFile("./serverConf.nvac", JSON.stringify(serverConf), (err) => {
+          if (err) console.log(err)
+        });
+    }
+
+    
   
     var color = colors[msg.guild.id].colors
   
@@ -291,25 +308,50 @@ client.on('message', msg => {
 
 
 client.on('guildMemberAdd', member => {
-    if (member.guild.id != "537101504864190464") return;
-    channel = client.channels.find(ch => ch.id === '539142431552176139');
+  if (serverConf.member[member.guild.id].member == "none") return;
+    channel = client.channels.find(ch => ch.id === serverConf.member[member.guild.id].member);
     channel.send(":arrow_right: " + member.user.tag);
   });
   client.on('guildMemberRemove', member => {
-    if (member.guild.id != "537101504864190464") return;
-    let channel = client.channels.find(ch => ch.id === '539142431552176139');
+    if (serverConf.member[member.guild.id].member == "none") return;
+
+    let channel = client.channels.find(ch => ch.id === serverConf.member[member.guild.id].member);
     channel.send(":arrow_left: " + member.user.tag);
   });
   client.on('guildBanAdd', (guild, user) => {
-    if (guild.id != "537101504864190464") return;
-    let channel = client.channels.find(ch => ch.id === '539142431552176139');
+    if (serverConf.member[guild.id].member == "none") return;
+    let channel = client.channels.find(ch => ch.id === serverConf.member[guild.id].member);
     channel.send(":hammer: Banned User: " + user.tag)
   });
   client.on('guildBanRemove', (guild, user) => {
-    if (guild.id != "537101504864190464") return;
-    let channel = client.channels.find(ch => ch.id === '539142431552176139');
+    if (serverConf.member[guild.id].member == "none") return;
+    let channel = client.channels.find(ch => ch.id === serverConf.member[guild.id].member);
     channel.send(":no_entry_sign: :hammer: Unbanned User: " + user.tag)
   });
+client.on('messageDelete', message => {
+  if (serverConf.messages[message.guild.id].messages == "none") return;
+  let channel = client.channels.find(ch => ch.id === serverConf.messages[message.guild.id].messages);
+  let embed = new Discord.RichEmbed();
+    embed.setTitle(":wastebasket: Message Delete");
+    embed.setColor(0xFF0000);
+    embed.setDescription('Message by ' + message.author.username + ' deleted on ' + new Date().toString());
+    embed.addField("Message content", message);
+    channel.send({embed});
+});
+
+client.on('messageUpdate', (oldMessage, newMessage) => {
+  if (serverConf.messages[oldMessage.guild.id].messages == "none") return;
+  let channel = client.channels.find(ch => ch.id === serverConf.messages[oldMessage.guild.id].messages);
+  if (oldMessage == newMessage) return;
+  if (oldMessage.content == "" || newMessage.content == "") return;
+    let embed = new Discord.RichEmbed();
+    embed.setTitle(":pencil: Message Edit");
+    embed.setColor(0xFF4500);
+    embed.setDescription('Message by ' + oldMessage.author.username + ' edited on ' + new Date().toString());
+    embed.addField("Old Message", oldMessage);
+    embed.addField("New Message", newMessage);
+    channel.send({embed});
+});
 let logintoken = JSON.parse(fs.readFileSync("./config.nvac", "utf8"))
 client.login(logintoken.token).catch(function() {
   console.log('hey uh, Login failed. The token that you put in is most likely invalid, please put in a new one...'.red);

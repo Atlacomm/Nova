@@ -51,7 +51,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       var prefix = `${settings.prefix}`
       var color = `${settings.color}`
     }
-  
+    
 };
 
 exports.conf = {

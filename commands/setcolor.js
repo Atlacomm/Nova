@@ -28,93 +28,93 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-  const discord = require("discord.js");
-  const fs = require("fs");
-  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
-  let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
-  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
-  let requesterID = msg.author.id;
-  try{
-    if(!prefixes[msg.guild.id]){
-    prefixes[msg.guild.id] = {
-      prefixes: settings.prefix
-    };
-  }
-  if(!colors[msg.guild.id]){
-    colors[msg.guild.id] = {
-      colors: settings.color
-    };
-  }
-  let prefix = prefixes[msg.guild.id].prefixes
+	const discord = require("discord.js");
+	const fs = require("fs");
+	let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
+	let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"));
+	let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+	let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
+	let requesterID = msg.author.id;
+	try{
+		if(!prefixes[msg.guild.id]){
+			prefixes[msg.guild.id] = {
+				prefixes: settings.prefix
+			};
+		}
+		if(!colors[msg.guild.id]){
+			colors[msg.guild.id] = {
+				colors: settings.color
+			};
+		}
+		let prefix = prefixes[msg.guild.id].prefixes;
 
-  let color = colors[msg.guild.id].colors
-  if(!msg.member.hasPermission(0x00000008)){
-    let fembed = new discord.RichEmbed
-    fembed.setTitle("error")
-    fembed.setColor(0xff0000)
-    fembed.setThumbnail(`${images.error}`)
-    fembed.setDescription(`You do not have sufficient permissions to run this command. Please talk to a server administrator. If you think this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`)
-    fembed.setFooter("Use "+prefix+"help to see all of my commands");
-    return msg.channel.send(fembed)
-  }
-  if(!args[0]) return msg.reply("usage: "+prefix+"setcolor <hex color, example: 0xE70056>")
-  if(args[0] == "help") return msg.reply("usage: "+prefix+"prefix <new prefix>")
-  let embed = new discord.RichEmbed
-  embed.setAuthor(msg.author.username, msg.author.avatarURL)
-  embed.setTitle("awaiting comfirmation")
-  embed.setColor(`${color}`)
-  embed.setThumbnail(`${images.timer5sec}`)
-  embed.setDescription(`Are you sure you want to change the bot embed color to \`${args[0]}\` serverwide? React with 🚫 to cancel if you change your mind.`)
-  embed.setFooter("Use "+prefix+"help to see all of my commands");
-  await msg.channel.send(embed).then(function(msg) {
-    msg.react('🚫');
+		let color = colors[msg.guild.id].colors;
+		if(!msg.member.hasPermission(0x00000008)){
+			let fembed = new discord.RichEmbed;
+			fembed.setTitle("error");
+			fembed.setColor(0xff0000);
+			fembed.setThumbnail(`${images.error}`);
+			fembed.setDescription("You do not have sufficient permissions to run this command. Please talk to a server administrator. If you think this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)");
+			fembed.setFooter("Use "+prefix+"help to see all of my commands");
+			return msg.channel.send(fembed);
+		}
+		if(!args[0]) return msg.reply("usage: "+prefix+"setcolor <hex color, example: 0xE70056>");
+		if(args[0] == "help") return msg.reply("usage: "+prefix+"prefix <new prefix>");
+		let embed = new discord.RichEmbed;
+		embed.setAuthor(msg.author.username, msg.author.avatarURL);
+		embed.setTitle("awaiting comfirmation");
+		embed.setColor(`${color}`);
+		embed.setThumbnail(`${images.timer5sec}`);
+		embed.setDescription(`Are you sure you want to change the bot embed color to \`${args[0]}\` serverwide? React with 🚫 to cancel if you change your mind.`);
+		embed.setFooter("Use "+prefix+"help to see all of my commands");
+		await msg.channel.send(embed).then(function(msg) {
+			msg.react("🚫");
 
-    let timeout = setTimeout(function() {
-    msg.clearReactions();
-    //code goes below
+			let timeout = setTimeout(function() {
+				msg.clearReactions();
+				//code goes below
 
-    colors[msg.guild.id] = {
-      colors: args[0]
-    };
-    fs.writeFile("./colors.nvac", JSON.stringify(colors), (err) => {
-      if (err) console.log(err)
-    });
-    embed.setThumbnail(`${images.done}`)
-    embed.setDescription(`Ok, color is now \`${args[0]}\``)
-    msg.edit(embed)
+				colors[msg.guild.id] = {
+					colors: args[0]
+				};
+				fs.writeFile("./colors.nvac", JSON.stringify(colors), (err) => {
+					if (err) console.log(err);
+				});
+				embed.setThumbnail(`${images.done}`);
+				embed.setDescription(`Ok, color is now \`${args[0]}\``);
+				msg.edit(embed);
 
 
 
-  }, 5000);
-  msg.awaitReactions(function(reaction) {
-    if (reaction.count > 1 && reaction.users.has(requesterID)) return true;
-    return false;
-    }, {
+			}, 5000);
+			msg.awaitReactions(function(reaction) {
+				if (reaction.count > 1 && reaction.users.has(requesterID)) return true;
+				return false;
+			}, {
 
-    max: 1
-    }).then(function() {
-    //Cancel the function
-    clearTimeout(timeout);
-    msg.clearReactions();
-    embed.setThumbnail(`${images.cancel}`)
-    embed.setDescription("The color change has been cancelled.")
-    msg.edit(embed);
-    });
+				max: 1
+			}).then(function() {
+				//Cancel the function
+				clearTimeout(timeout);
+				msg.clearReactions();
+				embed.setThumbnail(`${images.cancel}`);
+				embed.setDescription("The color change has been cancelled.");
+				msg.edit(embed);
+			});
     
-  });
-}catch(e){
-  throwE(e);
-}
+		});
+	}catch(e){
+		throwE(e);
+	}
 };
 
 exports.conf = {
-  aliases: [],
-  guildOnly: true,
+	aliases: [],
+	guildOnly: true,
 };
 exports.help = {
-  name: 'setcolor',
-  description: 'The color command',
-  usage: 'setcolor',
-  category: '- Configuration Commands',
+	name: "setcolor",
+	description: "The color command",
+	usage: "setcolor",
+	category: "- Configuration Commands",
 };

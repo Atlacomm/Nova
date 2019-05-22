@@ -28,59 +28,59 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
-  const Discord = require('discord.js');
-  const fs = require("fs")
-  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
-  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
-  let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))
-  if(msg.guild){
-    if(!prefixes[msg.guild.id]){
-      prefixes[msg.guild.id] = {
-        prefixes: settings.prefix
-      };
-    }
-    if(!colors[msg.guild.id]){
-      colors[msg.guild.id] = {
-        colors: settings.color
-      };
-    }
-    var prefix = prefixes[msg.guild.id].prefixes
-    var color = colors[msg.guild.id].colors
-  } else {
-    var prefix = `${settings.prefix}`
-    var color = `${settings.color}`
-  }
-  let user = msg.mentions.users.first();
-    if (user) {
-      const member = msg.guild.member(user);
-      if (member) {
-        let embed = new Discord.RichEmbed();
-        embed.setAuthor(msg.author.username, msg.author.avatarURL)
-        embed.setTitle("Profile Picture");
-        embed.setColor(color);
-        embed.setImage(user.avatarURL);
-        embed.setFooter("Use "+prefix+"help to see all of my commands");
-        msg.channel.send({embed});   
-     }
-  }else{
-    let embed = new Discord.RichEmbed();
-    embed.setAuthor(msg.author.username, msg.author.avatarURL)
-    embed.setTitle("Profile Picture");
-    embed.setColor(color);
-    embed.setImage(msg.author.avatarURL);
-    embed.setFooter("Use "+prefix+"help to see all of my commands");
-    msg.channel.send({embed});     
-  }
+	const Discord = require("discord.js");
+	const fs = require("fs");
+	let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
+	let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
+	let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"));
+	let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
+	if(msg.guild){
+		if(!prefixes[msg.guild.id]){
+			prefixes[msg.guild.id] = {
+				prefixes: settings.prefix
+			};
+		}
+		if(!colors[msg.guild.id]){
+			colors[msg.guild.id] = {
+				colors: settings.color
+			};
+		}
+		var prefix = prefixes[msg.guild.id].prefixes;
+		var color = colors[msg.guild.id].colors;
+	} else {
+		var prefix = `${settings.prefix}`;
+		var color = `${settings.color}`;
+	}
+	let user = msg.mentions.users.first();
+	if (user) {
+		const member = msg.guild.member(user);
+		if (member) {
+			let embed = new Discord.RichEmbed();
+			embed.setAuthor(msg.author.username, msg.author.avatarURL);
+			embed.setTitle("Profile Picture");
+			embed.setColor(color);
+			embed.setImage(user.avatarURL);
+			embed.setFooter("Use "+prefix+"help to see all of my commands");
+			msg.channel.send({embed});   
+		}
+	}else{
+		let embed = new Discord.RichEmbed();
+		embed.setAuthor(msg.author.username, msg.author.avatarURL);
+		embed.setTitle("Profile Picture");
+		embed.setColor(color);
+		embed.setImage(msg.author.avatarURL);
+		embed.setFooter("Use "+prefix+"help to see all of my commands");
+		msg.channel.send({embed});     
+	}
 };
 
 exports.conf = {
-aliases: [],
-guildOnly: false,
+	aliases: [],
+	guildOnly: false,
 };
 exports.help = {
-name: 'avatar',
-description: 'The pic command',
-usage: 'avatar',
-category: '- Utility Commands',
+	name: "avatar",
+	description: "The pic command",
+	usage: "avatar",
+	category: "- Utility Commands",
 };
