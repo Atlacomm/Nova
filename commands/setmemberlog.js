@@ -36,7 +36,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
 	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
 	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
-  let serverConf = JSON.parse(fs.readFileSync(`C:/Users/cjtho/Desktop/htdocs/private/js/nova/serverConf.nvac`, "utf8"));
+  let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"));
   if(msg.guild){
       if(!prefixes[msg.guild.id]) {
         prefixes[msg.guild.id] = {
