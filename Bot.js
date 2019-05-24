@@ -33,7 +33,6 @@ const col = require("colors");
 let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
 let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
-let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
 const client = new Discord.Client();
 global.servers = {};
 
@@ -169,6 +168,7 @@ fs.readdir(`${settings.directory}/commands`, (err, files) => {
   
 
 client.on('message', msg => {
+  let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
   let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"))  
   if (msg.author.bot) return;
   if(msg.guild){
