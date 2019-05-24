@@ -30,13 +30,13 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-  const Discord = require('discord.js');
-  const fs = require("fs");
-  let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
-  let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"));
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
-  let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
-  let serverConf = JSON.parse(fs.readFileSync("./serverConf.nvac", "utf8"));
+  const Discord = require("discord.js");
+	const fs = require("fs");
+	let settings = JSON.parse(fs.readFileSync("C:/Users/cjtho/Desktop/htdocs/private/js/nova/settings.nvac", "utf8"));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+  let serverConf = JSON.parse(fs.readFileSync(`C:/Users/cjtho/Desktop/htdocs/private/js/nova/serverConf.nvac`, "utf8"));
   if(msg.guild){
       if(!prefixes[msg.guild.id]) {
         prefixes[msg.guild.id] = {
@@ -70,7 +70,7 @@ module.exports.run = async (client, msg, args, throwE) => {
     };
     msg.reply("Set <#" + serverConf.messages[msg.guild.id].messages + "> as the chat log channel.");
 }
-fs.writeFile("./serverConf.nvac", JSON.stringify(serverConf), (err) => {
+fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
     if (err) console.log(err)
   });
 };

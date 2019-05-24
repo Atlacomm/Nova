@@ -29,16 +29,15 @@
 */
 const Discord = require('discord.js');
 const fs = require("fs");
-let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"))
 const col = require("colors");
-let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"))
-let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"))
-let serverConf = JSON.parse(fs.readFileSync("./serverConf.nvac", "utf8"))
+let settings = JSON.parse(fs.readFileSync("C:/Users/cjtho/Desktop/htdocs/private/js/nova/settings.nvac", "utf8"));
+let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
+let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
 const client = new Discord.Client();
 global.servers = {};
 
 const activities_list = []; // creates an arraylist containing phrases you want your bot to switch through.
-  console.clear()
   console.log("...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................".magenta)
   console.log(`Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.`.magenta);
   console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta)
@@ -50,7 +49,7 @@ const activities_list = []; // creates an arraylist containing phrases you want 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-fs.readdir('./commands', (err, files) => {
+fs.readdir(`${settings.directory}/commands`, (err, files) => {
   if (err) console.error(err);
   console.log(`Loading a total of ${files.length} commands into the memory.`.cyan);
   files.forEach(file => {
@@ -170,7 +169,7 @@ fs.readdir('./commands', (err, files) => {
   
 
 client.on('message', msg => {
-  let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"))  
+  let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"))  
   if (msg.author.bot) return;
   if(msg.guild){
     if(!prefixes[msg.guild.id]){
@@ -187,7 +186,7 @@ client.on('message', msg => {
       serverConf.messages[msg.guild.id] = {
         messages: "none"
       };
-      fs.writeFile("./serverConf.nvac", JSON.stringify(serverConf), (err) => {
+      fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
         if (err) console.log(err)
       });
     }
@@ -195,7 +194,7 @@ client.on('message', msg => {
         serverConf.member[msg.guild.id] = {
           member: "none"
         };
-        fs.writeFile("./serverConf.nvac", JSON.stringify(serverConf), (err) => {
+        fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
           if (err) console.log(err)
         });
     }
@@ -352,7 +351,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     embed.addField("New Message", newMessage);
     channel.send({embed});
 });
-let logintoken = JSON.parse(fs.readFileSync("./config.nvac", "utf8"))
+let logintoken = JSON.parse(fs.readFileSync(`${settings.directory}/config.nvac`, "utf8"))
 client.login(logintoken.token).catch(function() {
   console.log('hey uh, Login failed. The token that you put in is most likely invalid, please put in a new one...'.red);
   process.exit(0);

@@ -1,5 +1,6 @@
 {
     "prefix": "nva:",
     "version": "0.0.12",
-    "color": "0xE70056"
+    "color": "0xE70056",
+    "directory": "C:/Users/cjtho/Desktop/htdocs/private/js/nova"
 }

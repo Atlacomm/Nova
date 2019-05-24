@@ -29,12 +29,12 @@
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => { 
 	try{
-		const discord = require("discord.js");
+		const Discord = require("discord.js");
 		const fs = require("fs");
-		let settings = JSON.parse(fs.readFileSync("./settings.nvac", "utf8"));
-		let images = JSON.parse(fs.readFileSync("./images.nvac", "utf8"));
-		let prefixes = JSON.parse(fs.readFileSync("./prefixes.nvac", "utf8"));
-		let colors = JSON.parse(fs.readFileSync("./colors.nvac", "utf8"));
+		let settings = JSON.parse(fs.readFileSync("C:/Users/cjtho/Desktop/htdocs/private/js/nova/settings.nvac", "utf8"));
+		let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
+		let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
+		let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
 		let requesterID = msg.author.id;
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
@@ -76,7 +76,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 				prefixes[msg.guild.id] = {
 					prefixes: args[0]
 				};
-				fs.writeFile("./prefixes.nvac", JSON.stringify(prefixes), (err) => {
+				fs.writeFile(`${settings.directory}/prefixes.nvac`, JSON.stringify(prefixes), (err) => {
 					if (err) console.log(err);
 				});
 				embed.setThumbnail(`${images.done}`);
