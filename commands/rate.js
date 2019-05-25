@@ -71,7 +71,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       }
       let embed = new Discord.RichEmbed()
         embed.setTitle(`Rating`)
-        embed.addDescription(("Rating: " + rating + " -- " + member.displayName + " " + response))
+        embed.setDescription(("Rating: " + rating + " -- " + member.displayName + " " + response))
         embed.setColor(color)
         msg.channel.send( {embed} )
   };
