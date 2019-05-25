@@ -339,6 +339,7 @@ client.on('messageDelete', message => {
   let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
 
   if (serverConf.messages[message.guild.id].messages == "none") return;
+  if (message.author.bot) return;
   let channel = client.channels.find(ch => ch.id === serverConf.messages[message.guild.id].messages);
   let embed = new Discord.RichEmbed();
     embed.setTitle(":wastebasket: Message Delete");
@@ -349,7 +350,7 @@ client.on('messageDelete', message => {
 });
 client.on('messageUpdate', (oldMessage, newMessage) => {
   let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
-
+  if (oldMessage.author.bot) return;
   if (serverConf.messages[oldMessage.guild.id].messages == "none") return;
   let channel = client.channels.find(ch => ch.id === serverConf.messages[oldMessage.guild.id].messages);
   if (oldMessage == newMessage) return;
