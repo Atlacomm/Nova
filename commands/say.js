@@ -63,8 +63,8 @@ exports.conf = {
   guildOnly: false,
 };
 exports.help = {
-  name: 'commandnamehere',
-  description: 'The commandnamehere command',
-  usage: 'commandnamehere',
+  name: 'say',
+  description: 'The say command',
+  usage: 'say',
   category: '- Utility Commands',
 };
