@@ -70,6 +70,7 @@ fs.readdir(`${settings.directory}/commands`, (err, files) => {
 });
 
   client.on('ready', async () => {
+  client.user.setGame(Nova v${settings.version})
   let channel = client.channels.find(ch => ch.id === '539142431552176139');
   let embed = new Discord.RichEmbed(); 
   
