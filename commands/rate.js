@@ -69,8 +69,11 @@ module.exports.run = async (client, msg, args, throwE) => {
       } else{
         response = "is literally the best person ever.";
       }
-
-      msg.channel.send("Rating: " + rating + " -- " + member.displayName + response);
+      let embed = new Discord.RichEmbed()
+        embed.setTitle(`Rating`)
+        embed.addDescription(("Rating: " + rating + " -- " + member.displayName + " " + response))
+        embed.setColor(color)
+        msg.channel.send( {embed} )
   };
   
   exports.conf = {
