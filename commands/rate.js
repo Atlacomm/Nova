@@ -70,7 +70,7 @@ module.exports.run = async (client, msg, args, throwE) => {
         response = "is literally the best person ever.";
       }
 
-      msg.channel.send("Rating: " + rating + " -- " + member.displayName() + response);
+      msg.channel.send("Rating: " + rating + " -- " + member.displayName + response);
   };
   
   exports.conf = {
@@ -78,9 +78,9 @@ module.exports.run = async (client, msg, args, throwE) => {
     guildOnly: false,
   };
   exports.help = {
-    name: 'commandnamehere',
-    description: 'The commandnamehere command',
-    usage: 'commandnamehere',
-    category: '- Utility Commands',
+    name: 'rate',
+    description: 'Rate a user',
+    usage: 'nva:rate (User)',
+    category: '- Fun Commands',
   };
   

@@ -62,7 +62,7 @@ module.exports.run = async (client, msg, args, throwE) => {
         embed.addField("Question", (`${args.join(" ")}`))
         embed.addField("Answer", (`${reply[Math.floor(Math.random () * reply.length)]}`))
         embed.setColor(color)
-        message.reply( {embed} )
+        msg.reply( {embed} )
       }
     }catch(e){
         throwE(e)
