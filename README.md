@@ -10,10 +10,10 @@ This is the Alpha version of Nova and it is not complete. <a href="https://githu
 - Kick & Ban Users
 - Bulk Delete Messages
 - Return User Info & Avatar
-- look cool
+- Other Misc Stuff
 
 ## All Commands
-<img src="https://cdn.discordapp.com/attachments/570053414999031818/581624117246164992/unknown.png" alt="help menu">
+<img src="https://cdn.discordapp.com/attachments/576821047727357959/581672521129132042/unknown.png" alt="help menu">
 
 ## Special Thanks
 Reaction menus adapted from AstralMod by Victor Tran (vicr123#4567) and John Tur (reflectronic#6230) <a href="https://github.com/vicr123/AstralMod">[AstralMod Github]</a>
