@@ -50,7 +50,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 
 		let color = colors[msg.guild.id].colors;
 		if(!msg.member.hasPermission(0x00000008)){
-			let fembed = new discord.RichEmbed;
+			let fembed = new Discord.RichEmbed;
 			fembed.setTitle("error");
 			fembed.setColor(0xff0000);
 			fembed.setThumbnail(`${images.error}`);
@@ -60,7 +60,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 		}
 		if(!args[0]) return msg.reply("usage: "+prefix+"setcolor <hex color, example: 0xE70056>");
 		if(args[0] == "help") return msg.reply("usage: "+prefix+"prefix <new prefix>");
-		let embed = new discord.RichEmbed;
+		let embed = new Discord.RichEmbed;
 		embed.setAuthor(msg.author.username, msg.author.avatarURL);
 		embed.setTitle("awaiting comfirmation");
 		embed.setColor(`${color}`);
