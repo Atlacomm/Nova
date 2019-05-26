@@ -72,6 +72,8 @@ module.exports.run = async (client, msg, args, throwE) => {
 						.catch(console.error);
 
 					console.log("Powering off...".magenta);
+					let botManager = require("/home/se/htdocs/private/js/botManager")
+					botManager.stopBot()
 					let mainembed = new Discord.RichEmbed();
 					mainembed.setAuthor(msg.author.username, msg.author.avatarURL);
 					mainembed.setTitle("Power off");
