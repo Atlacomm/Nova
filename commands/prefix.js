@@ -49,7 +49,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 		let prefix = prefixes[msg.guild.id].prefixes;
 		let color = colors[msg.guild.id].colors;
 		if(!msg.member.hasPermission(0x00000008)){
-			let fembed = new discord.RichEmbed;
+			let fembed = new Discord.RichEmbed;
 			fembed.setTitle("error");
 			fembed.setColor(0xff0000);
 			fembed.setThumbnail(`${images.error}`);
