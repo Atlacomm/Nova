@@ -59,7 +59,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 		}
 		if(!args[0]) return msg.reply("usage: "+prefix+"prefix <new prefix>");
 		if(args[0] == "help") return msg.reply("usage: "+prefix+"prefix <new prefix>");
-		let embed = new discord.RichEmbed;
+		let embed = new Discord.RichEmbed;
 		embed.setAuthor(msg.author.username, msg.author.avatarURL);
 		embed.setTitle("awaiting comfirmation");
 		embed.setColor(color);
