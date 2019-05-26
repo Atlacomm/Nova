@@ -51,7 +51,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       var prefix = `${settings.prefix}`
       var color = `${settings.color}`
   }
-  if (!msg.member.hasPermission(8) || msg.author.id != "472923135965003786" || msg.author.id != "299314446428274689" || msg.author.id != "242775871059001344"){
+  if (!msg.member.hasPermission(8) && msg.author.id != "472923135965003786" && msg.author.id != "299314446428274689" && msg.author.id != "242775871059001344"){
     msg.reply("Hold up! You aren't allowed to send messages using the say command!");
     return;
   }
