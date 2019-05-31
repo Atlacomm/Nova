@@ -212,6 +212,12 @@ client.on('message', msg => {
     var color = colors[msg.guild.id].colors
   
     var prefix = prefixes[msg.guild.id].prefixes
+    fs.writeFile(`${settings.directory}/prefixes.nvac`, JSON.stringify(prefix), (err) => {
+        if (err) console.log(err)
+      });
+    fs.writeFile(`${settings.directory}/colors.nvac`, JSON.stringify(color), (err) => {
+        if (err) console.log(err)
+      });
   } else {
     var prefix = `${settings.prefix}`
     var color = `${settings.color}`
