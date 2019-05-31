@@ -209,6 +209,9 @@ client.on('message', msg => {
     var prefix = `${settings.prefix}`
     var color = `${settings.color}`
   }
+  if(msg.content === '<@538760613082693653>'){
+    msg.channel.send("Hi there! To see my commands please use \`"+prefix+'help\`')
+  }
   if(msg.content.startsWith("Jarvis") || msg.content.startsWith("Friday")){ //I love you 3000
     //msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
     if(msg.content.substring(6).startsWith(" eliminate")) msg.channel.send("Summoning the Mark IV, sir");
