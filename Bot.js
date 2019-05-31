@@ -339,6 +339,7 @@ client.on('guildMemberAdd', member => {
     channel.send(":no_entry_sign: :hammer: Unbanned User: " + user.tag)
   });
 client.on('messageDelete', message => {
+  try{
   let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
 
   if (serverConf.messages[message.guild.id].messages == "none") return;
@@ -351,8 +352,10 @@ client.on('messageDelete', message => {
     embed.setDescription('Message by ' + message.author.username + ' deleted on ' + new Date().toString());
     embed.addField("Message content", message.content);
     channel.send({embed});
+  }catch(e){console.error(e)}
 });
 client.on('messageUpdate', (oldMessage, newMessage) => {
+  try{
   let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
   if (oldMessage.author.bot) return;
   if (serverConf.messages[oldMessage.guild.id].messages == "none") return;
@@ -366,6 +369,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     embed.addField("Old Message", oldMessage.content);
     embed.addField("New Message", newMessage.content);
     channel.send({embed});
+  }catch(e){console.error(e)}
 });
 let logintoken = JSON.parse(fs.readFileSync(`${settings.directory}/config.nvac`, "utf8"))
 client.login(logintoken.token).catch(function() {
