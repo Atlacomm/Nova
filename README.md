@@ -20,7 +20,7 @@ Coming Soon.
 ## All Commands
 <img src="https://cdn.discordapp.com/attachments/537119674828324890/584113679801253923/unknown.png" alt="help menu">
 
-##For the Nerds
+## For the Nerds
 Nova is currently hosted on a Standard B1s (1 vcpus, 1 GiB memory) Azure VM; It is run as a child proccess of Stargate: A web interface for SE developers. 
 
 ## Special Thanks
