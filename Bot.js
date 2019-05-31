@@ -171,8 +171,14 @@ fs.readdir(`${settings.directory}/commands`, (err, files) => {
 client.on('message', msg => {
   let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, "utf8"))
   let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"))  
+  
+  
   if (msg.author.bot) return;
   if(msg.guild){
+    if(!serverConf.suggest[msg.guild.id]){
+      serverConf.suggest[msg.guild.id] = {
+        suggest: "none"
+      };
     if(!prefixes[msg.guild.id]){
       prefixes[msg.guild.id] = {
         prefixes: settings.prefix
