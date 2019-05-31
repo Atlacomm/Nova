@@ -179,6 +179,7 @@ client.on('message', msg => {
       serverConf.suggest[msg.guild.id] = {
         suggest: "none"
       };
+    }
     if(!prefixes[msg.guild.id]){
       prefixes[msg.guild.id] = {
         prefixes: settings.prefix
