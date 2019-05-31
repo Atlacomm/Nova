@@ -184,11 +184,17 @@ client.on('message', msg => {
       prefixes[msg.guild.id] = {
         prefixes: settings.prefix
       };
+      fs.writeFile(`${settings.directory}/prefixes.nvac`, JSON.stringify(prefixes), (err) => {
+        if (err) console.log(err)
+      });
     }
     if(!colors[msg.guild.id]){
       colors[msg.guild.id] = {
         colors: settings.color
       };
+      fs.writeFile(`${settings.directory}/colors.nvac`, JSON.stringify(colors), (err) => {
+        if (err) console.log(err)
+      });
     }
     if(!serverConf.messages[msg.guild.id]){
       serverConf.messages[msg.guild.id] = {
@@ -212,12 +218,6 @@ client.on('message', msg => {
     var color = colors[msg.guild.id].colors
   
     var prefix = prefixes[msg.guild.id].prefixes
-    fs.writeFile(`${settings.directory}/prefixes.nvac`, JSON.stringify(prefix), (err) => {
-        if (err) console.log(err)
-      });
-    fs.writeFile(`${settings.directory}/colors.nvac`, JSON.stringify(color), (err) => {
-        if (err) console.log(err)
-      });
   } else {
     var prefix = `${settings.prefix}`
     var color = `${settings.color}`
