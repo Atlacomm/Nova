@@ -202,8 +202,8 @@ module.exports.run = async (client, msg, args, throwE) => {
                             });
                           }    
                           msg.channel.send(":gear: Set the color to " + colors[msg.guild.id].colors)
+		          scollector.stop();
                 });
-                scollector.stop();
       }else {
           msg.channel.send(":gear: Unknown Command. Exiting menu.");
           collector.stop();
