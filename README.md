@@ -1,5 +1,5 @@
 # Nova
-<b>An easy to use, yet very powerful Discord bot.
+<b>A general purpose bot meant to fulfill all of the needs of the average Discord server.
 Devloped by Christian T. (Swingin30#9105), Andrew Lee (alee#4277), and Nayab W. (TechLion#1789)</b>
 
 This is the Alpha version of Nova and it is not complete. <a href="https://github.com/software-elevated/Nova/issues">[Report a bug]</a>

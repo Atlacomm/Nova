@@ -246,8 +246,8 @@ client.on('message', msg => {
 					channel.setTopic("uptime: 0/0/0")
 						.catch(console.error);
 
-          console.log("Powering off...".magenta);
-          botManager.startBot()
+                                        console.log("Powering off...".magenta);
+                                        botManager.startBot()
 					let mainembed = new Discord.RichEmbed();
 					mainembed.setAuthor(msg.author.username, msg.author.avatarURL);
 					mainembed.setTitle("Power off");
