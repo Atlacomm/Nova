@@ -340,12 +340,13 @@ client.on('messageDelete', message => {
 
   if (serverConf.messages[message.guild.id].messages == "none") return;
   if (message.author.bot) return;
+  if (message.content == "") return
   let channel = client.channels.find(ch => ch.id === serverConf.messages[message.guild.id].messages);
   let embed = new Discord.RichEmbed();
     embed.setTitle(":wastebasket: Message Delete");
     embed.setColor(0xFF0000);
     embed.setDescription('Message by ' + message.author.username + ' deleted on ' + new Date().toString());
-    embed.addField("Message content", message);
+    embed.addField("Message content", message.content);
     channel.send({embed});
 });
 client.on('messageUpdate', (oldMessage, newMessage) => {
@@ -359,8 +360,8 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
     embed.setTitle(":pencil: Message Edit");
     embed.setColor(0xFF4500);
     embed.setDescription('Message by ' + oldMessage.author.username + ' edited on ' + new Date().toString());
-    embed.addField("Old Message", oldMessage);
-    embed.addField("New Message", newMessage);
+    embed.addField("Old Message", oldMessage.content);
+    embed.addField("New Message", newMessage.content);
     channel.send({embed});
 });
 let logintoken = JSON.parse(fs.readFileSync(`${settings.directory}/config.nvac`, "utf8"))
