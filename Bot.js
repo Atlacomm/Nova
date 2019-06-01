@@ -204,13 +204,21 @@ client.on('message', msg => {
         if (err) console.log(err)
       });
     }
-      if(!serverConf.member[msg.guild.id]){
-        serverConf.member[msg.guild.id] = {
-          member: "none"
-        };
-        fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
+    if(!serverConf.member[msg.guild.id]){
+      serverConf.member[msg.guild.id] = {
+        member: "none"
+      };
+      fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
           if (err) console.log(err)
-        });
+      });
+    }
+    if(!serverConf.suggest[msg.guild.id]){
+      serverConf.suggest[msg.guild.id] = {
+        suggest: "none"
+      };
+      fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
+          if (err) console.log(err)
+      });
     }
 
     
