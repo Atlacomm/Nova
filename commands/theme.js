@@ -72,5 +72,5 @@ exports.help = {
 	name: "theme",
 	description: "The theme command",
 	usage: "theme",
-	category: "- System Commands",
+	category: "- Developer Commands",
 };
