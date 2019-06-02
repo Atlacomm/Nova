@@ -205,7 +205,8 @@ module.exports.run = async (client, msg, args, throwE) => {
 		          scollector.stop();
                 });
       }else if(msg.content == "exit" || "Exit"){
-        ":gear: Setup has exited."
+        msg.channel.send(":gear: Setup has exited.")
+	collector.stop()
       }else {
           msg.channel.send(":gear: Unknown Command. Exiting menu.");
           collector.stop();
