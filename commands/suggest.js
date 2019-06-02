@@ -77,6 +77,8 @@ module.exports.run = async (client, msg, args, throwE) => {
 			.then(() => msg.react(client.emojis.get('584093082035945482')))
 			.catch(() => throwE('Reaction Error'));
 	});
+	msg.delete()
+	msg.channel.send("your suggestion has been sent!")
 
 };
   
