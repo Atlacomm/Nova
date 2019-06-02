@@ -27,47 +27,16 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg, args, throwE) => {
+module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, images) => {
 	const Discord = require('discord.js');
-	const fs = require('fs');
-	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
-	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
-	if(msg.guild){
-		if(!prefixes[msg.guild.id]){
-			prefixes[msg.guild.id] = {
-				prefixes: settings.prefix
-			};
-		}
-		if(!colors[msg.guild.id]){
-			colors[msg.guild.id] = {
-				colors: settings.color
-			};
-		}
-		var prefix = prefixes[msg.guild.id].prefixes;
-		var color = colors[msg.guild.id].colors;
-	} else {
-		var prefix = `${settings.prefix}`;
-		var color = `${settings.color}`;
-	}
-      
-	if(!serverConf.suggest[msg.guild.id]){
-		serverConf.suggest[msg.guild.id] = {
-			suggest: 'none'
-		};
-	}
-	fs.writeFile(`${settings.directory}/serverConf.nvac`, JSON.stringify(serverConf), (err) => {
-		if (err) console.log(err);
-	});
-	if(serverConf.suggest[msg.guild.id].suggest == 'none') return msg.reply('The server admins have not configured a suggestions channel.');
+	
+	if(suggest == 'none') return msg.reply('The server admins have not configured a suggestions channel.');
 	if(!args[0]) return msg.reply('Hey! Use \`' + prefix + 'suggest (suggestion)\` next time!');
-
+	msg.delete();
+	msg.channel.send('your suggestion has been sent!');
 	let suggestion = args.join(' ');
 	let embed = new Discord.RichEmbed();
-	let channel = client.channels.find(ch => ch.id === serverConf.suggest[msg.guild.id].suggest);
+	let channel = client.channels.find(ch => ch.id === suggest);
 	embed.setDescription(suggestion);
 	embed.setAuthor(msg.author.username, msg.author.avatarURL);
 	embed.setColor(color);
@@ -77,8 +46,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 			.then(() => msg.react(client.emojis.get('584093082035945482')))
 			.catch(() => throwE('Reaction Error'));
 	});
-	msg.delete()
-	msg.channel.send("your suggestion has been sent!")
+	
 
 };
   

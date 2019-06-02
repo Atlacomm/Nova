@@ -27,34 +27,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg, args, throwE) => {
+module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, images) => {
 	const Discord = require('discord.js');
 	const fs = require('fs');
-	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
+	let settings = JSON.parse(fs.readFileSync('/Users/nayab/Documents/Project Folders/Nova copy/settings.nvac', 'utf8'));
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
-	if(msg.guild){
-		if(!prefixes[msg.guild.id]){
-			prefixes[msg.guild.id] = {
-				prefixes: settings.prefix
-			};
-		}
-		if(!colors[msg.guild.id]){
-			colors[msg.guild.id] = {
-				colors: settings.color
-			};
-		}
-		var prefix = prefixes[msg.guild.id].prefixes;
-		var color = colors[msg.guild.id].colors;
-	} else {
-		var prefix = `${settings.prefix}`;
-		var color = `${settings.color}`;
-	}
-      
-
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));  
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
+	
 	try{
 		if (!msg.member.hasPermission('KICK_MEMBERS') && msg.author.id != '472923135965003786' && msg.author.id != '299314446428274689' && msg.author.id != '242775871059001344') return msg.reply('Only people with \`Kick_Members\` can do that!');
     

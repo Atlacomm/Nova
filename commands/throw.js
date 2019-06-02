@@ -27,13 +27,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * ***********************************************************************************************/
-module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require('discord.js');
-	const fs = require('fs');
-	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
-	
-	let error = args.join(' ');
-	throwE(error);
+module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, images) => {
+	throwE(args.join(' '));
 };
 
 exports.conf = {

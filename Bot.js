@@ -27,28 +27,27 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 const Discord = require('discord.js');
 const fs = require('fs');
 const col = require('colors');
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 const client = new Discord.Client();
 global.servers = {};
 
-const activities_list = []; // creates an arraylist containing phrases you want your bot to switch through.
+//Fancy Terminal ASCII Art
 console.log('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
 console.log('Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.'.magenta);
 console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta);
 console.log('This is free software, and you are welcome to redistribute it'.magenta);
 console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
-// Command Handler by jtsshieh and modified by Alee
-
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
 fs.readdir(`${settings.directory}/commands`, (err, files) => {
+	// Load Commands | Command Handler by jtsshieh and modified by Alee
 	if (err) console.error(err);
 	console.log(`Loading a total of ${files.length} commands into the memory.`.cyan);
 	files.forEach(file => {
@@ -75,6 +74,7 @@ client.on('ready', async () => {
 	let embed = new Discord.RichEmbed(); 
   
 	try{ 
+		//NOVA Spinner
 		var twirlTimer = (function() {
 			var P = ['[\\] N   ', '[|] NO  ', '[/] NOV ', '[-] NOVA', '[\\]  OVA', '[|]  VA', '[/]    A', '[-]     '];
 			var x = 0;
@@ -83,6 +83,7 @@ client.on('ready', async () => {
 				x &= 3;
 			}, 500);
 		})();
+
 		embed.setTitle('N O V A');
 		embed.setDescription('Nova is now starting. please wait..');
 		embed.setColor(0x000000);
@@ -116,26 +117,19 @@ client.on('ready', async () => {
 			embed.addField('Ping','Calculating ping...');
 			msg.edit({embed}).then(function(msg) {
 				let time = Date.now() - pingtime;
-				embed.addField('pong!', `🛰 Total round trip ping is ${time.toString()}ms`);
+				embed.addField('Pong!', `🛰 Total round trip ping is ${time.toString()}ms`);
 				msg.edit({embed});
 			});
 		}, 2000);
 		setTimeout(() => {
-			embed.addField('nvaUX version', `this bot is running on nvaUX ${settings.version}`);
+			embed.addField('nvaUX version', `${settings.version}`);
 			embed.setThumbnail(`${images.done}`);
 			msg.edit({embed});
 			clearInterval(twirlTimer);
 			process.stdout.clearLine();
 			process.stdout.cursorTo(0);
 			console.log(`Logged in as ${client.user.tag}`.green);
-		}, 2500);
-		//TODO: LOGGING
-		//TODO: TIMERS
-		//TODO: NOTE TAKING
-
-
-
-    
+		}, 2500);   
 	} catch (error) {
 		console.log(error);
 	}
@@ -143,6 +137,7 @@ client.on('ready', async () => {
   
 setInterval(() => 
 {
+	//Update #nova-logs with the uptime
 	uptime = client.uptime;
 	var seconds = Math.round(uptime / 1000);
 	var minutes = 0;
@@ -163,23 +158,17 @@ setInterval(() =>
 		days += 1;
 	}
 	let channel = client.channels.find(ch => ch.id === '539142431552176139');
-	channel.setTopic(`uptime: ${days}/${hours}/${minutes} memory usage: ${Math.round(used * 100) / 100}Mb`)
+	channel.setTopic(`Uptime: ${days}/${hours}/${minutes} memory usage: ${Math.round(used * 100) / 100}Mb`)
 		.catch(console.error);
 }, 120000);
   
-
 client.on('message', msg => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
 	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));  
-  
-  
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
+	
 	if (msg.author.bot) return;
-	if(msg.guild){
-		if(!serverConf.suggest[msg.guild.id]){
-			serverConf.suggest[msg.guild.id] = {
-				suggest: 'none'
-			};
-		}
+	if(msg.guild){ //Define all needed server options
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
 				prefixes: settings.prefix
@@ -220,23 +209,23 @@ client.on('message', msg => {
 				if (err) console.log(err);
 			});
 		}
-
-    
-  
-		var color = colors[msg.guild.id].colors;
-  
+		var messageLog = serverConf.messages[msg.guild.id].messages;
+		var memberLog = serverConf.member[msg.guild.id].member;
+		var suggest = serverConf.suggest[msg.guild.id].suggest;
+		var color = colors[msg.guild.id].colors;  
 		var prefix = prefixes[msg.guild.id].prefixes;
 	} else {
 		var prefix = `${settings.prefix}`;
 		var color = `${settings.color}`;
 	}
-	if(msg.content === '<@538760613082693653>'){
+
+	if(msg.content == '<@538760613082693653>'){ //If message only mentions NOVA, Assume help is needed. 
 		msg.channel.send('Hi there! To see my commands please use \`'+prefix+'help\`');
 	}
-	if(msg.content.startsWith('Jarvis') || msg.content.startsWith('Friday')){ //I love you 3000
-		//msg.channel.send("Hold on <@" + msg.author.id + ">, I'll inform Mrs. Potts that you'll be late for dinner. Again.");
-		if(msg.content.substring(6).startsWith(' eliminate')) msg.channel.send('Summoning the Mark IV, sir');
+	if(msg.content.startsWith('Jarvis') || msg.content.startsWith('Friday')){ //Jarvis easter egg
+		if(msg.content.substring(6).startsWith(' eliminate')) msg.channel.send('I\'ll get the suit ready, sir');
 		if(msg.content.substring(6).startsWith(' critical systems status')){
+			//Return nva:system (old version)
 			let embed = new Discord.RichEmbed;
 			let used = process.memoryUsage().heapUsed / 1024 / 1024;
 			let heartbeat = Math.round(client.ping);
@@ -287,7 +276,7 @@ client.on('message', msg => {
 				goembed.setTitle('Error');
 				goembed.setColor(0xE70056);
 				goembed.setThumbnail(`${images.error}`);
-				goembed.setDescription('This command can only be ran in a guild due to compatibility reasons.');
+				goembed.setDescription('This command can only be ran in a server due to compatibility issues.');
 				goembed.setFooter('We\'re sorry about that!');
 				return msg.channel.send(goembed);
 			}
@@ -303,33 +292,13 @@ client.on('message', msg => {
 			console.error(e);
 		}
 		try {
-			cmd.run(client, msg, args, throwE);
+			cmd.run(client, msg, args, throwE, suggest, color, prefix, images);
 		}
 		catch (e) {
 			console.log(e);
 		}
 	}
-
-	try{
-
-		if(msg.content === 'Yell at cylex'){
-			msg.channel.send('cylex, nobody cares about the caps lock.');
-		}
-		if(msg.content.startsWith('y\'all')){
-			msg.reply('I can see you are a southerner as well');
-		}
-		else if(msg.content.startsWith(settings.prefix) == null){
-			let embed = new Discord.RichEmbed();
-			embed.setTitle('Unknown Command');
-			embed.setColor(0xff0000);
-			embed.setDescription('Please use **'+prefix+'help** to see all available commands. some commands may not be available to you depending on your role.');
-			msg.channel.send({embed});
-		}
-	} catch (error) {
-		console.log(error);
-	}
 });
-
 
 client.on('guildMemberAdd', member => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
