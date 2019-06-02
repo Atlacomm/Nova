@@ -71,7 +71,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       if (msg.content == "1") {
           msg.delete();
           collector.stop();
-          msg.channel.send(":gear: What channel would you like to set for suggestions? (Channel Name) (None) | (Cancel)");
+          msg.channel.send(":gear: What channel would you like to set for suggestions? (#<channel>) (None) | (Cancel)");
           const scollector = new Discord.MessageCollector(msg.channel, m => m.author.id === msg.author.id, { time: 10000 });
           scollector.on('collect', msg => {
                   if (msg.content == "cancel" || msg.content == "Cancel") {
@@ -101,7 +101,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       }else if (msg.content == "2"){
         msg.delete();
           collector.stop();
-          msg.channel.send(":gear: What channel would you like to set for chat logging? (Channel Name) (None) | (Cancel)");
+          msg.channel.send(":gear: What channel would you like to set for chat logging? (#<channel>) (None) | (Cancel)");
           const scollector = new Discord.MessageCollector(msg.channel, m => m.author.id === msg.author.id, { time: 10000 });
           scollector.on('collect', msg => {
                   if (msg.content == "cancel" || msg.content == "Cancel") {
@@ -131,7 +131,7 @@ module.exports.run = async (client, msg, args, throwE) => {
       }else if (msg.content == "3"){
             msg.delete();
             collector.stop();
-            msg.channel.send(":gear: What channel would you like to set for member alerts? (Channel Name) (None) | (Cancel)");
+            msg.channel.send(":gear: What channel would you like to set for member alerts? (#<channel>) (None) | (Cancel)");
             const scollector = new Discord.MessageCollector(msg.channel, m => m.author.id === msg.author.id, { time: 10000 });
             scollector.on('collect', msg => {
                     if (msg.content == "cancel" || msg.content == "Cancel") {
