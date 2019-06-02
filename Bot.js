@@ -295,7 +295,7 @@ client.on('message', msg => {
 			cmd.run(client, msg, args, throwE, suggest, color, prefix, images);
 		}
 		catch (e) {
-			console.log(e);
+			console.error(e);
 		}
 	}
 });
