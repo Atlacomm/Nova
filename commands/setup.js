@@ -60,7 +60,7 @@ module.exports.run = async (client, msg, args, throwE) => {
     
   msg.delete();
   let embed = new Discord.RichEmbed();
-    embed.addField("Nova Configuration", `1 - Suggestion Channel (<#${serverConf.suggest[msg.guild.id].suggest}>) \n 2 - Chat Log Channel (<#${serverConf.messages[msg.guild.id].messages}>) \n 3 - Member Alerts Channel (<#${serverConf.member[msg.guild.id].member}>) \n 4 - Prefix (\`${prefix}\`)\n 5 - Embed Colors (\`${color}\`) \n Exit`)
+    embed.addField("Nova Configuration", `1 - Suggestion Channel (<#${serverConf.suggest[msg.guild.id].suggest}>) \n 2 - Chat Log Channel (<#${serverConf.messages[msg.guild.id].messages}>) \n 3 - Member Alerts Channel (<#${serverConf.member[msg.guild.id].member}>) \n 4 - Prefix (\`${prefix}\`)\n 5 - Embed Colors (\`${color}\`) \n Exit - Exit Menu`);
     embed.setColor(`${color}`)
     embed.setThumbnail(`${images.settings}`)
     embed.setAuthor(msg.guild.name, msg.guild.iconURL)
@@ -185,7 +185,7 @@ module.exports.run = async (client, msg, args, throwE) => {
         msg.delete();
           collector.stop();
          msg.channel.send(":gear: Enter a hex code (ex: 0xE70056 [Default Color])")
-          const scollector = new Discord.MessageCollector(msg.channel, m => m.author.id === msg.author.id, { time: 10000 });
+          const scollector = new Discord.MessageCollector(msg.channel, m => m.author.id === msg.author.id, { time: 20000 });
           scollector.on('collect', msg => {
                   if (msg.content == "cancel" || msg.content == "Cancel") {
                       msg.delete();
@@ -208,7 +208,7 @@ module.exports.run = async (client, msg, args, throwE) => {
         msg.channel.send(":gear: Setup has exited.")
 	collector.stop()
       }else {
-          msg.channel.send(":gear: Unknown Command. Exiting menu.");
+          msg.channel.send(":gear: Unknown Command. Exiting setup.");
           collector.stop();
       }
   });
