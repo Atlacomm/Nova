@@ -12,7 +12,7 @@
     Nova, A bot designed to fit into any discord server.
     Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.
 
-    Bot improvments by Andrew Lee
+    Bot improvements by Andrew Lee
     
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@
 
 const Discord = require('discord.js');
 const fs = require('fs');
-const col = require('colors');
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
 const client = new Discord.Client();
