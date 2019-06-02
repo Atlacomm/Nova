@@ -28,62 +28,62 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-    const Discord = require("discord.js");
-      const fs = require("fs");
-      let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-      let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-      let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-      let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
-      if(msg.guild){
-        if(!prefixes[msg.guild.id]){
-          prefixes[msg.guild.id] = {
-            prefixes: settings.prefix
-          };
-        }
-        if(!colors[msg.guild.id]){
-          colors[msg.guild.id] = {
-            colors: settings.color
-          };
-        }
-        var prefix = prefixes[msg.guild.id].prefixes
-        var color = colors[msg.guild.id].colors
-      } else {
-        var prefix = `${settings.prefix}`
-        var color = `${settings.color}`
-      }
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
+	if(msg.guild){
+		if(!prefixes[msg.guild.id]){
+			prefixes[msg.guild.id] = {
+				prefixes: settings.prefix
+			};
+		}
+		if(!colors[msg.guild.id]){
+			colors[msg.guild.id] = {
+				colors: settings.color
+			};
+		}
+		var prefix = prefixes[msg.guild.id].prefixes;
+		var color = colors[msg.guild.id].colors;
+	} else {
+		var prefix = `${settings.prefix}`;
+		var color = `${settings.color}`;
+	}
       
-      let rating = Math.floor(Math.random() * 101);
-      let user = msg.mentions.users.first();
-      let response;
-      const member = msg.guild.member(user);
+	let rating = Math.floor(Math.random() * 101);
+	let user = msg.mentions.users.first();
+	let response;
+	const member = msg.guild.member(user);
 
 
-      if(!member) return msg.reply("Rate who? (Mention someone)");
-      if(member.id == "189412734050238464") return msg.reply("Royce will always be a bad.");
-      if(rating < 25){
-          response = "seems like a bad person to me...";
-      } else if (rating < 50){
-          response = "seems like a pretty decent guy";
-      } else if (rating < 75){
-        response = "seems like a great person!";
-      } else{
-        response = "is literally the best person ever.";
-      }
-      let embed = new Discord.RichEmbed()
-        embed.setTitle(`Rating`)
-        embed.setDescription(("Rating: " + rating + " -- " + member.displayName + " " + response))
-        embed.setColor(color)
-        msg.channel.send( {embed} )
-  };
+	if(!member) return msg.reply('Rate who? (Mention someone)');
+	if(member.id == '189412734050238464') return msg.reply('Royce will always be a bad.');
+	if(rating < 25){
+		response = 'seems like a bad person to me...';
+	} else if (rating < 50){
+		response = 'seems like a pretty decent guy';
+	} else if (rating < 75){
+		response = 'seems like a great person!';
+	} else{
+		response = 'is literally the best person ever.';
+	}
+	let embed = new Discord.RichEmbed();
+	embed.setTitle('Rating');
+	embed.setDescription(('Rating: ' + rating + ' -- ' + member.displayName + ' ' + response));
+	embed.setColor(color);
+	msg.channel.send( {embed} );
+};
   
-  exports.conf = {
-    aliases: [],
-    guildOnly: false,
-  };
-  exports.help = {
-    name: 'rate',
-    description: 'Rate a user',
-    usage: 'nva:rate (User)',
-    category: '- Fun Commands',
-  };
+exports.conf = {
+	aliases: [],
+	guildOnly: false,
+};
+exports.help = {
+	name: 'rate',
+	description: 'Rate a user',
+	usage: 'nva:rate (User)',
+	category: '- Fun Commands',
+};
   

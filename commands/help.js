@@ -29,12 +29,12 @@
  * ***********************************************************************************************/
 
 module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
   
 	try{
 		if(msg.guild){
@@ -64,20 +64,20 @@ module.exports.run = async (client, msg, args, throwE) => {
   
 
 		if(msg.guild){
-			if (!msg.guild.member(client.user).hasPermission("EMBED_LINKS")) return msg.reply("ERROR: Nova doesn't have the permission to send embed links please enable them to use the full help.");
+			if (!msg.guild.member(client.user).hasPermission('EMBED_LINKS')) return msg.reply('ERROR: Nova doesn\'t have the permission to send embed links please enable them to use the full help.');
 		}
 		const embed = new Discord.RichEmbed()
 			.setAuthor(`Nova Help (Nova is on ${client.guilds.size} servers)`, client.user.avatarURL)
 			.setThumbnail(`${images.unknown}`)
-			.setDescription("Every command you input into Nova for this server is `" + prefix + "`")
+			.setDescription('Every command you input into Nova for this server is `' + prefix + '`')
 			.setColor(color)
-			.setFooter("Designed and Programed (with love) by Swingin30, Alee and TechLion Copyright 2019, Licensed with GPL-3.0");
+			.setFooter('Designed and Programed (with love) by Swingin30, Alee and TechLion Copyright 2019, Licensed with GPL-3.0');
 
 		categories.forEach(function(x) {
-			let cat = "";
+			let cat = '';
 			commands.forEach(function(command) {
 				if (client.commands.get(command).help.category == x) {
-					cat = cat + command + "\n";
+					cat = cat + command + '\n';
 				}
 			});
 			embed.addField(x, cat, true);
@@ -89,12 +89,12 @@ module.exports.run = async (client, msg, args, throwE) => {
 };
 
 exports.conf = {
-	aliases: ["h"],
+	aliases: ['h'],
 	guildOnly: false,
 };
 exports.help = {
-	name: "help",
-	description: "Displays all the commands or a page with information for 1 command.",
-	usage: "help (command:command-name)",
-	category: "- Utility Commands",
+	name: 'help',
+	description: 'Displays all the commands or a page with information for 1 command.',
+	usage: 'help (command:command-name)',
+	category: '- Utility Commands',
 };

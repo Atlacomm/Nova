@@ -28,12 +28,12 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	if(msg.guild){
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
@@ -57,19 +57,19 @@ module.exports.run = async (client, msg) => {
 		if (member) {
 			let embed = new Discord.RichEmbed();
 			embed.setAuthor(msg.author.username, msg.author.avatarURL);
-			embed.setTitle("Profile Picture");
+			embed.setTitle('Profile Picture');
 			embed.setColor(color);
 			embed.setImage(user.avatarURL);
-			embed.setFooter("Use "+prefix+"help to see all of my commands");
+			embed.setFooter('Use '+prefix+'help to see all of my commands');
 			msg.channel.send({embed});   
 		}
 	}else{
 		let embed = new Discord.RichEmbed();
 		embed.setAuthor(msg.author.username, msg.author.avatarURL);
-		embed.setTitle("Profile Picture");
+		embed.setTitle('Profile Picture');
 		embed.setColor(color);
 		embed.setImage(msg.author.avatarURL);
-		embed.setFooter("Use "+prefix+"help to see all of my commands");
+		embed.setFooter('Use '+prefix+'help to see all of my commands');
 		msg.channel.send({embed});     
 	}
 };
@@ -79,8 +79,8 @@ exports.conf = {
 	guildOnly: false,
 };
 exports.help = {
-	name: "avatar",
-	description: "The pic command",
-	usage: "avatar",
-	category: "- Utility Commands",
+	name: 'avatar',
+	description: 'The pic command',
+	usage: 'avatar',
+	category: '- Utility Commands',
 };

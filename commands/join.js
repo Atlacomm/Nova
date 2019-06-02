@@ -28,12 +28,12 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	if(msg.guild){
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
@@ -51,7 +51,7 @@ module.exports.run = async (client, msg, args, throwE) => {
 		var prefix = `${settings.prefix}`;
 		var color = `${settings.color}`;
 	}
-	throwE("Not functional.");
+	throwE('Not functional.');
   
 };
 
@@ -60,8 +60,8 @@ exports.conf = {
 	guildOnly: true,
 };
 exports.help = {
-	name: "join",
-	description: "Not functional.",
-	usage: "Not functional.",
-	category: "- Utility Commands",
+	name: 'join',
+	description: 'Not functional.',
+	usage: 'Not functional.',
+	category: '- Utility Commands',
 };

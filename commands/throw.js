@@ -28,11 +28,11 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 	
-	let error = args.join(" ");
+	let error = args.join(' ');
 	throwE(error);
 };
 
@@ -41,7 +41,7 @@ exports.conf = {
 	guildOnly: false,
 };
 exports.help = {
-	name: "throw",
-	description: "Throws an error",
-	usage: "nva:throw (error)",
-	category: "- Developer Commands"};
+	name: 'throw',
+	description: 'Throws an error',
+	usage: 'nva:throw (error)',
+	category: '- Developer Commands'};

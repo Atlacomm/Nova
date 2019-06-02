@@ -28,12 +28,12 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	try{
 		if(msg.guild){
 			if(!prefixes[msg.guild.id]){
@@ -54,10 +54,10 @@ module.exports.run = async (client, msg, args, throwE) => {
 		}
 		let embed = new Discord.RichEmbed;
 		embed.setAuthor(msg.author.username, msg.author.avatarURL);
-		embed.setTitle("Displaying theme information");
+		embed.setTitle('Displaying theme information');
 		embed.setColor(color);
 		embed.setThumbnail(`${images.theme}`);
-		embed.setDescription("Hex color: 0xE70056\n[icons](https://github.com/software-elevated/Nova/blob/master/icons)\n[Icon template](https://www.dropbox.com/s/4rnntx4vkhd5zi7/nova%20frame.blend?dl=0)");
+		embed.setDescription('Hex color: 0xE70056\n[icons](https://github.com/software-elevated/Nova/blob/master/icons)\n[Icon template](https://www.dropbox.com/s/4rnntx4vkhd5zi7/nova%20frame.blend?dl=0)');
 		msg.channel.send(embed);
 	}catch(e){
 		throwE(e);
@@ -69,8 +69,8 @@ exports.conf = {
 	guildOnly: false,
 };
 exports.help = {
-	name: "theme",
-	description: "The theme command",
-	usage: "theme",
-	category: "- Developer Commands",
+	name: 'theme',
+	description: 'The theme command',
+	usage: 'theme',
+	category: '- Developer Commands',
 };

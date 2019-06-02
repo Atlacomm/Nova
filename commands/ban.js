@@ -28,14 +28,14 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	if (!msg.member.hasPermission("BAN_MEMBERS")){
-		msg.reply("Hold up! You aren't allowed to ban members!");
+	if (!msg.member.hasPermission('BAN_MEMBERS')){
+		msg.reply('Hold up! You aren\'t allowed to ban members!');
 		return;
 	}
 	let user = msg.mentions.users.first();
 	const member = msg.guild.member(user);
 	if (member) {
-		member.ban("Ban by " + msg.author.username + " using Nova.").then(() => {
+		member.ban('Ban by ' + msg.author.username + ' using Nova.').then(() => {
 			msg.reply(`Successfully banned ${user.tag}`);
 		}).catch(err => {
 			throwE(err);
@@ -48,8 +48,8 @@ exports.conf = {
 	guildOnly: true,
 };
 exports.help = {
-	name: "ban",
-	description: "The ban command",
-	usage: "ban @member",
-	category: "- Moderation Commands",
+	name: 'ban',
+	description: 'The ban command',
+	usage: 'ban @member',
+	category: '- Moderation Commands',
 };

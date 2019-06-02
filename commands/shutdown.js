@@ -28,12 +28,12 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	if(msg.guild){
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
@@ -53,38 +53,38 @@ module.exports.run = async (client, msg, args, throwE) => {
 	}
 	try{
 		let requesterID = msg.author.id;
-		if (msg.author.id == "472923135965003786" || msg.author.id == "299314446428274689" || msg.author.id == "242775871059001344"){
-			let channel = client.channels.find(ch => ch.id === "539142431552176139"); 
+		if (msg.author.id == '472923135965003786' || msg.author.id == '299314446428274689' || msg.author.id == '242775871059001344'){
+			let channel = client.channels.find(ch => ch.id === '539142431552176139'); 
 			let embed2 = new Discord.RichEmbed();
-			embed2.setTitle("Shutdown");
+			embed2.setTitle('Shutdown');
 			embed2.setThumbnail(`${images.timer5sec}`);
 			embed2.setColor(color);
-			embed2.setDescription("The shutdown command was initiated. If you want to cancel this operation, you have 5 seconds to react with 🚫 to cancel the operation.");
+			embed2.setDescription('The shutdown command was initiated. If you want to cancel this operation, you have 5 seconds to react with 🚫 to cancel the operation.');
 			await msg.channel.send(embed2).then(function(msg) {
-				msg.react("🚫");
+				msg.react('🚫');
 
 				let timeout = setTimeout(function() {
 					msg.clearReactions();
-					embed2.setDescription("Shutdown confirmed, nova will now shut down");
+					embed2.setDescription('Shutdown confirmed, nova will now shut down');
 					embed2.setThumbnail(`${images.off}`);
 					msg.edit(embed2);
-					channel.setTopic("uptime: 0/0/0")
+					channel.setTopic('uptime: 0/0/0')
 						.catch(console.error);
 
-					console.log("Powering off...".magenta);
-					let botManager = require("/home/se/htdocs/private/js/botManager")
-					botManager.stopBot()
+					console.log('Powering off...'.magenta);
+					let botManager = require('/home/se/htdocs/private/js/botManager');
+					botManager.stopBot();
 					let mainembed = new Discord.RichEmbed();
 					mainembed.setAuthor(msg.author.username, msg.author.avatarURL);
-					mainembed.setTitle("Power off");
+					mainembed.setTitle('Power off');
 					mainembed.setColor(0xff0000);
 					mainembed.setDescription(`Nova shut down on ${new Date()}`);
 					mainembed.setThumbnail(`${images.off}`);
-					mainembed.setFooter("to confirm shutdown please check the console");
+					mainembed.setFooter('to confirm shutdown please check the console');
 					channel.send(mainembed);
 
 
-					client.user.setStatus("invisible");
+					client.user.setStatus('invisible');
 					setTimeout(() =>{
 						process.exit(0);
 					}, 4000);
@@ -99,12 +99,12 @@ module.exports.run = async (client, msg, args, throwE) => {
 					clearTimeout(timeout);
 					msg.clearReactions();
 					embed2.setThumbnail(`${images.cancel}`);
-					embed2.setFooter("Alright, I've cancelled the shutdown");
+					embed2.setFooter('Alright, I\'ve cancelled the shutdown');
 					msg.edit(embed2);
 				});
 			});
 		} else {
-			msg.reply("Hold up! You aren't a dev! :thinking:");
+			msg.reply('Hold up! You aren\'t a dev! :thinking:');
 			return;
 		}
 	}catch(e){
@@ -117,8 +117,8 @@ exports.conf = {
 	guildOnly: false,
 };
 exports.help = {
-	name: "shutdown",
-	description: "The shutdown command",
-	usage: "shutdown",
-	category: "- Developer Commands",
+	name: 'shutdown',
+	description: 'The shutdown command',
+	usage: 'shutdown',
+	category: '- Developer Commands',
 };

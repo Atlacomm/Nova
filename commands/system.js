@@ -28,13 +28,13 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	const { version } = require("discord.js");
-	const Discord = require("discord.js");
-	const fs = require("fs");
-	let settings = JSON.parse(fs.readFileSync("/home/se/htdocs/private/js/nova/settings.nvac", "utf8"));
-	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, "utf8"));
-	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, "utf8"));
-	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, "utf8"));
+	const { version } = require('discord.js');
+	const Discord = require('discord.js');
+	const fs = require('fs');
+	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+	let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));
+	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	try{
 		if(msg.guild){
 			if(!prefixes[msg.guild.id]){
@@ -75,17 +75,17 @@ module.exports.run = async (client, msg, args, throwE) => {
 			days += 1;
 		}
 		let embed = new Discord.RichEmbed;
-		embed.setTitle("System status");
+		embed.setTitle('System status');
 		embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`);
 		embed.setColor(color);
 		embed.setThumbnail(`${images.cog}`);
-		embed.addField("memory usage", `${Math.round(used * 100) / 100}Mb`, true);
-		embed.addField("guilds", `${client.guilds.size}`, true);
-		embed.addField("version", `This bot is running on nvaUX ${settings.version}`, true);
-		embed.addField("Uptime", `Nova has been online for ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds.`, true)
-		embed.addField("Discord.js", `v${version}`, true );
-		embed.addField("Node", `${process.version}`, true );
-		embed.setFooter("Use "+prefix+"help to see all of my commands");
+		embed.addField('memory usage', `${Math.round(used * 100) / 100}Mb`, true);
+		embed.addField('guilds', `${client.guilds.size}`, true);
+		embed.addField('version', `This bot is running on nvaUX ${settings.version}`, true);
+		embed.addField('Uptime', `Nova has been online for ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds.`, true);
+		embed.addField('Discord.js', `v${version}`, true );
+		embed.addField('Node', `${process.version}`, true );
+		embed.setFooter('Use '+prefix+'help to see all of my commands');
 		msg.channel.send({embed}).then(function(msg) {
 			let time = Date.now() - pingtime;
 			embed.setDescription(`Ping: ${time.toString()}ms\nHeartbeat: ${heartbeat}ms`);
@@ -99,12 +99,12 @@ module.exports.run = async (client, msg, args, throwE) => {
 };
 
 exports.conf = {
-	aliases: ["uptime", "memory", "sysmanager"],
+	aliases: ['uptime', 'memory', 'sysmanager'],
 	guildOnly: false,
 };
 exports.help = {
-	name: "system",
-	description: "shows current system statistics",
-	usage: "system",
-	category: "- Utility Commands",
+	name: 'system',
+	description: 'shows current system statistics',
+	usage: 'system',
+	category: '- Utility Commands',
 };

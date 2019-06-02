@@ -28,14 +28,14 @@
  *
  * ***********************************************************************************************/
 module.exports.run = async (client, msg, args, throwE) => {
-	if (!msg.member.hasPermission("KICK_MEMBERS")){
-		msg.reply("Hold up! You aren't allowed to kick members!");
+	if (!msg.member.hasPermission('KICK_MEMBERS')){
+		msg.reply('Hold up! You aren\'t allowed to kick members!');
 		return;
 	}
 	let user = msg.mentions.users.first();
 	const member = msg.guild.member(user);
 	if (member) {
-		member.kick("Kicked by " + msg.author.username + " using Nova.").then(() => {
+		member.kick('Kicked by ' + msg.author.username + ' using Nova.').then(() => {
 			msg.reply(`Successfully kicked ${user.tag}`);
 		}).catch(err => {
 			throwE(err);
@@ -48,8 +48,8 @@ exports.conf = {
 	guildOnly: true,
 };
 exports.help = {
-	name: "kick",
-	description: "The kick command",
-	usage: "kick",
-	category: "- Moderation Commands",
+	name: 'kick',
+	description: 'The kick command',
+	usage: 'kick',
+	category: '- Moderation Commands',
 };
