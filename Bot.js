@@ -35,12 +35,11 @@ let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'ut
 const client = new Discord.Client();
 global.servers = {};
 
-//Fancy Terminal ASCII Art
-console.log('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
-console.log('Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.'.magenta);
-console.log('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta);
-console.log('This is free software, and you are welcome to redistribute it'.magenta);
-console.log(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
+proccess.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
+proccess.stdout.write('Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.'.magenta);
+proccess.stdout.write('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta);
+proccess.stdout.write('This is free software, and you are welcome to redistribute it'.magenta);
+proccess.stdout.write(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -58,13 +57,13 @@ fs.readdir(`${settings.directory}/commands`, (err, files) => {
 			client.commands.set(command.help.name, command);
 		}
 		catch (err) {
-			console.log('An error has occured trying to load a command. Here is the error.'.red);
-			console.log(err.stack);
+            proccess.stdout.write('An error has occurred trying to load a command. Here is the error.'.red);
+			console.error(err.stack);
 		}
 	});
 	process.stdout.clearLine();
 	process.stdout.cursorTo(0);
-	console.log('Command Loading complete!'.green);
+    proccess.stdout.write('Command Loading complete!'.green);
 });
 
 client.on('ready', async () => {
@@ -127,7 +126,7 @@ client.on('ready', async () => {
 			clearInterval(twirlTimer);
 			process.stdout.clearLine();
 			process.stdout.cursorTo(0);
-			console.log(`Logged in as ${client.user.tag}`.green);
+            proccess.stdout.write(`Logged in as ${client.user.tag}`.green);
 		}, 2500);   
 	} catch (error) {
 		console.log(error);
