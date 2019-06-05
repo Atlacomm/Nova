@@ -29,11 +29,14 @@
 */
 
 const Discord = require('discord.js');
+const DBL = require("dblapi.js");
+const client = new Discord.Client();
 const fs = require('fs');
 const col = require("colors");
+let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
+const dbl = new DBL(configFile.dblToken, client);
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-const client = new Discord.Client();
 global.servers = {};
 
 process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
