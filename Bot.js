@@ -101,7 +101,7 @@ client.on('ready', async () => {
 			}
 			else if(heartbeat > 150){
 				embed.setColor(0xff0000);
-				embed.addField(`Heartbeat: ${heartbeat}ms`, 'Please contact a developer, you can use suzu]about to see who to talk to about the issue');
+				embed.addField(`Heartbeat: ${heartbeat}ms`, 'Please contact a developer.');
 			}
 			msg.edit({embed});
 		}, 1000);
@@ -256,15 +256,6 @@ client.on('message', msg => {
 		cmd = client.commands.get(command);
 	} else if (client.aliases.has(command)) {
 		cmd = client.commands.get(client.aliases.get(command));
-	} else {
-		let embed = new Discord.RichEmbed;
-		embed.setAuthor(msg.author.username, msg.author.avatarURL);
-		embed.setTitle('Unknown command');
-		embed.setThumbnail(`${images.unknown}`);
-		embed.setDescription(`There was an error processing that, we couldn't find the command \`${prefix}${command}\`, if you feel this is a mistake, please contact a developer [here](https://discord.gg/RFXArBN)`);
-		embed.setFooter('nvaUX' + settings.version);
-		embed.setColor('RED');
-		return msg.channel.send(embed);
 	}
 
 	if (cmd) {
