@@ -295,13 +295,14 @@ client.on('message', msg => {
 
 client.on('guildMemberAdd', member => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
+	if(!serverConf.member[member.guild.id]) return;
 	if (serverConf.member[member.guild.id].member == 'none') return;
 	channel = client.channels.find(ch => ch.id === serverConf.member[member.guild.id].member);
 	channel.send(':arrow_right: ' + member.user.tag);
 });
 client.on('guildMemberRemove', member => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
+	if(!serverConf.member[member.guild.id]) return;
 	if (serverConf.member[member.guild.id].member == 'none') return;
 
 	let channel = client.channels.find(ch => ch.id === serverConf.member[member.guild.id].member);
@@ -309,14 +310,14 @@ client.on('guildMemberRemove', member => {
 });
 client.on('guildBanAdd', (guild, user) => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
+	if(!serverConf.member[guild.id]) return;
 	if (serverConf.member[guild.id].member == 'none') return;
 	let channel = client.channels.find(ch => ch.id === serverConf.member[guild.id].member);
 	channel.send(':hammer: Banned User: ' + user.tag);
 });
 client.on('guildBanRemove', (guild, user) => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
+	if(!serverConf.member[guild.id]) return;
 	if (serverConf.member[guild.id].member == 'none') return;
 	let channel = client.channels.find(ch => ch.id === serverConf.member[guild.id].member);
 	channel.send(':no_entry_sign: :hammer: Unbanned User: ' + user.tag);
@@ -324,7 +325,7 @@ client.on('guildBanRemove', (guild, user) => {
 client.on('messageDelete', message => {
 	try{
 		let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
-
+		if(!serverConf.messages[message.guild.id]) return;
 		if (serverConf.messages[message.guild.id].messages == 'none') return;
 		if (message.author.bot) return;
 		if (message.content == '') return;
@@ -340,6 +341,7 @@ client.on('messageDelete', message => {
 client.on('messageUpdate', (oldMessage, newMessage) => {
 	try{
 		let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
+		if(!serverConf.messages[oldMessage.guild.id]) return;
 		if (oldMessage.author.bot) return;
 		if (serverConf.messages[oldMessage.guild.id].messages == 'none') return;
 		let channel = client.channels.find(ch => ch.id === serverConf.messages[oldMessage.guild.id].messages);
