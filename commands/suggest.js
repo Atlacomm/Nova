@@ -41,9 +41,9 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 	embed.setAuthor(msg.author.username, msg.author.avatarURL);
 	embed.setColor(color);
 	await channel.send(embed).then(function(msg) {
-		msg.react(client.emojis.get('584093053510352917'))
-			.then(() => msg.react(client.emojis.get('584093236398784512')))
-			.then(() => msg.react(client.emojis.get('584093082035945482')))
+		msg.react(client.emojis.get('592555766372892672'))
+			.then(() => msg.react(client.emojis.get('592555765990948864')))
+			.then(() => msg.react(client.emojis.get('592555766368436234')))
 			.catch(() => throwE('Reaction Error'));
 	});
 	
