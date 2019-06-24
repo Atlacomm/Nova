@@ -77,6 +77,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 					clearTimeout(timeout);
 					msg.clearReactions();
 					embed2.setThumbnail(`${images.cancel}`);
+					embed2.setDescription(`Shutdown aborted.`);
 					embed2.setFooter('Alright, I\'ve cancelled the shutdown');
 					msg.edit(embed2);
 				});
