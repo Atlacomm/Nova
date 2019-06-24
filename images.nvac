@@ -10,7 +10,7 @@
     "off": "https://github.com/software-elevated/Nova/blob/master/icons/off.png?raw=true",
     "start": "https://github.com/software-elevated/Nova/blob/master/icons/start.png?raw=true",
     "clock": "https://github.com/software-elevated/Nova/blob/master/icons/clock.png?raw=true",
-    "cog": "https://github.com/software-elevated/Nova/blob/master/icons/cog.png?raw=true",
+    "cog": "https://raw.githubusercontent.com/software-elevated/Nova/master/icons/cog.png",
     "theme": "https://github.com/software-elevated/Nova/blob/master/icons/theme.png?raw=true",
     "cancel": "https://github.com/software-elevated/Nova/blob/master/icons/cancel.png?raw=true",
     "ping" : "https://github.com/software-elevated/Nova/blob/master/icons/ping.png?raw=true",
