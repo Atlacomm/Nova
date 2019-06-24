@@ -1,6 +1,6 @@
 {
     "error": "https://raw.githubusercontent.com/software-elevated/Nova/master/icons/error.png",
-    "logo": "https://github.com/software-elevated/Nova/blob/master/icons/novalogo.png",
+    "logo": "https://github.com/software-elevated/Nova/blob/master/icons/novalogo.png?raw=true",
     "unknown": "https://github.com/software-elevated/Nova/blob/master/icons/unknown.png?raw=true",
     "report": "https://github.com/software-elevated/Nova/blob/master/icons/report.png?raw=true",
     "timer5sec": "https://github.com/software-elevated/Nova/blob/master/icons/timer.gif?raw=true",
