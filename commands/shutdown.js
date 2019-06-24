@@ -52,7 +52,6 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 
 					console.log('Powering off...'.magenta);
 					let botManager = require('/home/se/htdocs/private/js/botManager');
-					botManager.stopBot();
 					let mainembed = new Discord.RichEmbed();
 					mainembed.setAuthor(msg.author.username, msg.author.avatarURL);
 					mainembed.setTitle('Power off');
@@ -61,7 +60,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 					mainembed.setThumbnail(`${images.off}`);
 					mainembed.setFooter('to confirm shutdown please check the console');
 					channel.send(mainembed);
-
+					botManager.stopBot();
 
 					client.user.setStatus('invisible');
 					setTimeout(() =>{
