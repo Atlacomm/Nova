@@ -50,6 +50,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 	embed.setTitle('Rating');
 	embed.setDescription(('Rating: ' + rating + ' -- ' + member.displayName + ' ' + response));
 	embed.setColor(color);
+	embed.setThumbnail(`${images.rate}`);
 	msg.channel.send( {embed} );
 };
   
