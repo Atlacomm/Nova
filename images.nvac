@@ -16,5 +16,6 @@
     "ping" : "https://github.com/software-elevated/Nova/blob/master/icons/ping.png?raw=true",
     "delete": "https://github.com/software-elevated/Nova/blob/master/icons/delete.png?raw=true",
     "settings": "https://raw.githubusercontent.com/software-elevated/Nova/master/icons/changeSettings.png",
-    "ball": "https://github.com/software-elevated/Nova/blob/master/icons/8ball.png?raw=true"
+    "ball": "https://github.com/software-elevated/Nova/blob/master/icons/8ball.png?raw=true",
+    "rate": "https://github.com/software-elevated/Nova/blob/master/icons/rate.png?raw=true"
 }
