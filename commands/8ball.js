@@ -39,6 +39,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 			let embed = new Discord.RichEmbed();
 			embed.setTitle(' **:8ball: The 8 Ball has spoken!**');
 			embed.addField('Question', (`${args.join(' ')}`));
+			embed.setThumbnail(`${images.8ball}`);
 			embed.addField('Answer', (`${reply[Math.floor(Math.random () * reply.length)]}`));
 			embed.setColor(color);
 			msg.reply( {embed} );
