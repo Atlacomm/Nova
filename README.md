@@ -1,3 +1,4 @@
+<img src="https://github.com/software-elevated/Nova/blob/master/icons/banner.png?raw=true" alt="banner">
 # Nova
 <b>A general purpose bot meant to fulfill all of the needs of the average Discord server.
 Devloped by Christian T. (Swingin30#9105), Andrew Lee (alee#4277), and Nayab W. (TechLion#1789)</b>
