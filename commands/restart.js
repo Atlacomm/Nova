@@ -59,13 +59,10 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 					mainembed.setDescription(`Nova restart on ${new Date()}`);
 					mainembed.setThumbnail(`${images.restart}`);
 					mainembed.setFooter('to confirm restart, please check the console');
-					channel.send(mainembed);
-					botManager.startBot();
-
-					client.user.setStatus('invisible');
-					setTimeout(() =>{
-						process.exit(0);
-					}, 4000);
+					channel.send(mainembed).then(() => {
+                        botManager.startBot();
+                    });
+                client.user.setStatus('invisible');
 				}, 5000);
 				msg.awaitReactions(function(reaction) {
 					if (reaction.count > 1 && reaction.users.has(requesterID)) return true;
