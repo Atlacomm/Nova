@@ -1,0 +1,103 @@
+/************************************************************************************************
+ *...............................................................................
+ *..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............
+ *.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............
+ *.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............
+ *.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............
+ *.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........
+ *.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........
+ *.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........
+ *.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........
+ *...............................................................................
+ *
+ *   Command here: Restart command
+ *   Copyright (C) 2019 Designed and Programed by Swingin30 and Techlion
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ***********************************************************************************************/
+module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, images) => {
+	const Discord = require('discord.js');
+
+	try{
+		let requesterID = msg.author.id;
+		if (msg.author.id == '472923135965003786' || msg.author.id == '299314446428274689' || msg.author.id == '242775871059001344'){
+			let channel = client.channels.find(ch => ch.id === '539142431552176139'); 
+			let embed2 = new Discord.RichEmbed();
+			embed2.setTitle('Restart');
+			embed2.setThumbnail(`${images.timer5sec}`);
+			embed2.setColor(color);
+			embed2.setDescription('The restart command was initiated. If you want to cancel this operation, you have 5 seconds to react with 🚫 to cancel the operation.');
+			await msg.channel.send(embed2).then(function(msg) {
+				msg.react('🚫');
+
+				let timeout = setTimeout(function() {
+					msg.clearReactions();
+					embed2.setDescription('Restart confirmed, nova will now shut down');
+					embed2.setThumbnail(`${images.restart}`);
+					msg.edit(embed2);
+					channel.setTopic('uptime: 0/0/0')
+						.catch(console.error);
+
+					console.log('Restarting...'.magenta);
+					let botManager = require('/home/se/htdocs/private/js/botManager');
+					let mainembed = new Discord.RichEmbed();
+					mainembed.setAuthor(msg.author.username, msg.author.avatarURL);
+					mainembed.setTitle('Restart');
+					mainembed.setColor(0xff0000);
+					mainembed.setDescription(`Nova restart on ${new Date()}`);
+					mainembed.setThumbnail(`${images.restart}`);
+					mainembed.setFooter('to confirm restart, please check the console');
+					channel.send(mainembed);
+					botManager.startBot();
+
+					client.user.setStatus('invisible');
+					setTimeout(() =>{
+						process.exit(0);
+					}, 4000);
+				}, 5000);
+				msg.awaitReactions(function(reaction) {
+					if (reaction.count > 1 && reaction.users.has(requesterID)) return true;
+					return false;
+				}, {
+					max: 1
+				}).then(function() {
+					//Cancel the function
+					clearTimeout(timeout);
+					msg.clearReactions();
+					embed2.setThumbnail(`${images.cancel}`);
+					embed2.setDescription(`Restart aborted.`);
+					embed2.setFooter('Alright, I\'ve cancelled the restart');
+					msg.edit(embed2);
+				});
+			});
+		} else {
+			msg.reply('Hold up! You aren\'t a dev! :thinking:');
+			return;
+		}
+	}catch(e){
+		throwE(e);
+	}
+};
+
+exports.conf = {
+	aliases: [],
+	guildOnly: false,
+};
+exports.help = {
+	name: 'restart',
+	description: 'The restart command',
+	usage: 'restart',
+	category: '- Developer Commands',
+};
