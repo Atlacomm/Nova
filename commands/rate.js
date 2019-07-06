@@ -36,10 +36,12 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 
 	if(!member) return msg.reply('Rate who? (Mention someone)');
 	if(member.id == '189412734050238464') return msg.reply('Royce will always be a bad.');
+	if(member.bot) return msg.reply('It\'s a bot, how good can it be.');
+	if(member.id == '472923135965003786' || '299314446428274689') return msg.reply('That is litteraly my creator.');
 	if(rating < 25){
 		response = 'seems like a bad person to me...';
 	} else if (rating < 50){
-		response = 'seems like a pretty decent guy';
+		response = 'seems like a pretty decent guy person.';
 	} else if (rating < 75){
 		response = 'seems like a great person!';
 	} else{
