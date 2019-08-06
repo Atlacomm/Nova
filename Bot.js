@@ -180,7 +180,6 @@ client.on('message', msg => {
 
 	let coinAmt = Math.floor(Math.random() * 15) + 1;
 	let baseAmt = Math.floor(Math.random() * 15) + 1;
-	console.log(`coinAmt: ${coinAmt} baseAmt: ${baseAmt}`)
 	if(coinAmt === baseAmt){
 		coins[msg.author.id] = {
 			coins: coins[msg.author.id].coins + coinAmt
