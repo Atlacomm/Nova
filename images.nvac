@@ -6,7 +6,7 @@
     "timer5sec": "https://github.com/software-elevated/Nova/blob/master/icons/timer.gif?raw=true",
     "done": "https://github.com/software-elevated/Nova/blob/master/icons/done.png?raw=true",
     "load": "https://github.com/software-elevated/Nova/blob/master/icons/load.png?raw=true",
-    "npay": "https://github.com/software-elevated/Nova/blob/master/icons/npay.png?raw=true",
+    "npay": "https://raw.githubusercontent.com/software-elevated/Nova/master/icons/npay.png",
     "off": "https://github.com/software-elevated/Nova/blob/master/icons/off.png?raw=true",
     "start": "https://github.com/software-elevated/Nova/blob/master/icons/start.png?raw=true",
     "clock": "https://github.com/software-elevated/Nova/blob/master/icons/clock.png?raw=true",
