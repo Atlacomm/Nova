@@ -33,10 +33,11 @@ const DBL = require("dblapi.js");
 const client = new Discord.Client();
 const fs = require('fs');
 const col = require("colors");
-let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
+let configFile = JSON.parse(fs.readFileSync('C:/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
 const dbl = new DBL(configFile.dblToken, client);
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
+let coins = JSON.parse(fs.readFileSync(`${settings.directory}\\coins.nvac`, 'utf8'));
 global.servers = {};
 
 process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
@@ -170,6 +171,25 @@ client.on('message', msg => {
 	let colors = JSON.parse(fs.readFileSync(`${settings.directory}/colors.nvac`, 'utf8'));
 	
 	if (msg.author.bot) return;
+
+	if(!coins[msg.author.id]){
+		coins[msg.author.id] = {
+			coins: 0
+		};
+	}
+
+	let coinAmt = Math.floor(Math.random() * 15) + 1;
+	let baseAmt = Math.floor(Math.random() * 15) + 1;
+	console.log(`coinAmt: ${coinAmt} baseAmt: ${baseAmt}`)
+	if(coinAmt === baseAmt){
+		coins[msg.author.id] = {
+			coins: coins[msg.author.id].coins + coinAmt
+		};
+		fs.writeFile(`${settings.directory}\\coins.nvac`, JSON.stringify(coins), (err) => {
+			if (err) console.log(err);
+		});
+	}
+
 	if(msg.guild){ //Define all needed server options
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
@@ -285,7 +305,7 @@ client.on('message', msg => {
 			console.error(e);
 		}
 		try {
-			cmd.run(client, msg, args, throwE, suggest, color, prefix, images);
+			cmd.run(client, msg, args, throwE, suggest, color, prefix, images, coins);
 		}
 		catch (e) {
 			console.error(e);
