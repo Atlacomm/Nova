@@ -37,7 +37,7 @@ let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/con
 const dbl = new DBL(configFile.dblToken, client);
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-let coins = JSON.parse(fs.readFileSync(`${settings.directory}\\coins.nvac`, 'utf8'));
+let coins = JSON.parse(fs.readFileSync(`${settings.directory}//coins.nvac`, 'utf8'));
 global.servers = {};
 
 process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
