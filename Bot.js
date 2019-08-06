@@ -172,14 +172,14 @@ client.on('message', msg => {
 	
 	if (msg.author.bot) return;
 
+    //Coin Garbage
 	if(!coins[msg.author.id]){
 		coins[msg.author.id] = {
 			coins: 0
 		};
 	}
-
-	let coinAmt = Math.floor(Math.random() * 15) + 1;
-	let baseAmt = Math.floor(Math.random() * 15) + 1;
+	let coinAmt = Math.floor(Math.random() * 10) + 1;
+	let baseAmt = Math.floor(Math.random() * 10) + 1;
 	if(coinAmt === baseAmt){
 		coins[msg.author.id] = {
 			coins: coins[msg.author.id].coins + coinAmt
@@ -189,7 +189,8 @@ client.on('message', msg => {
 		});
 	}
 
-	if(msg.guild){ //Define all needed server options
+    //Define all needed server options
+	if(msg.guild){
 		if(!prefixes[msg.guild.id]){
 			prefixes[msg.guild.id] = {
 				prefixes: settings.prefix
@@ -230,8 +231,7 @@ client.on('message', msg => {
 				if (err) console.log(err);
 			});
 		}
-		var messageLog = serverConf.messages[msg.guild.id].messages;
-		var memberLog = serverConf.member[msg.guild.id].member;
+
 		var suggest = serverConf.suggest[msg.guild.id].suggest;
 		var color = colors[msg.guild.id].colors;  
 		var prefix = prefixes[msg.guild.id].prefixes;
@@ -242,31 +242,6 @@ client.on('message', msg => {
 
 	if(msg.content == '<@538760613082693653>'){ //If message only mentions NOVA, Assume help is needed. 
 		msg.channel.send('Hi there! To see my commands please use \`'+prefix+'help\`');
-	}
-	if(msg.content.startsWith('Jarvis') || msg.content.startsWith('Friday')){ //Jarvis easter egg
-		if(msg.content.substring(6).startsWith(' eliminate')) msg.channel.send('I\'ll get the suit ready, sir');
-		if(msg.content.substring(6).startsWith(' critical systems status')){
-			//Return nva:system (old version)
-			let embed = new Discord.RichEmbed;
-			let used = process.memoryUsage().heapUsed / 1024 / 1024;
-			let heartbeat = Math.round(client.ping);
-			let pingtime = Date.now();
-			embed.setTitle('System status');
-			embed.setDescription(`Ping: calculating...\nHeartbeat: ${heartbeat}ms`);
-			embed.setColor(0xE70056);
-			embed.setThumbnail(`${images.cog}`);
-			embed.addField('memory usage', `${Math.round(used * 100) / 100}Mb`);
-			embed.addField('guilds', `${client.guilds.size}`);
-			embed.addField('version', `This bot is running on nvaUX ${settings.version}`);
-			embed.setFooter('Use '+prefix+'help to see all of my commands');
-			msg.channel.send({embed}).then(function(msg) {
-				let time = Date.now() - pingtime;
-				embed.setDescription(`Ping: ${time.toString()}ms\nHeartbeat: ${heartbeat}ms`);
-				msg.edit({embed});
-			});
-		}
-		if(msg.content.substring(6).startsWith(' who are you')) msg.channel.send('I am based on the AI assistant from Iron Man. I also do things TechLion asks. Like taking out the trash. Speaking of... nva:kick <@558698226249760768>');
-		return;
 	}
 
 	if (!msg.content.startsWith(prefix)) return;
