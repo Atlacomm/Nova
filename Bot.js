@@ -184,7 +184,7 @@ client.on('message', msg => {
 		coins[msg.author.id] = {
 			coins: coins[msg.author.id].coins + coinAmt
 		};
-		fs.writeFile(`${settings.directory}\\coins.nvac`, JSON.stringify(coins), (err) => {
+		fs.writeFile(`${settings.directory}/coins.nvac`, JSON.stringify(coins), (err) => {
 			if (err) console.log(err);
 		});
 	}
