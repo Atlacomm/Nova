@@ -40,6 +40,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
         let embed = new Discord.RichEmbed;
         embed.setAuthor('Nova Pay', msg.author.avatarURL);
         embed.setTitle("Transaction Declined");
+        embed.setColor(0xff0000)
         embed.setThumbnail(`${images.npay}`)
         embed.setDescription("We were not able to find the user mentioned, please try again with a valid user");
         embed.setFooter('Use '+prefix+'help to see all of my commands');
@@ -49,8 +50,9 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
         let embed = new Discord.RichEmbed;
         embed.setAuthor('Nova Pay', msg.author.avatarURL);
         embed.setTitle("Transaction Declined");
+        embed.setColor(0xff0000)
         embed.setThumbnail(`${images.npay}`)
-        embed.setDescription("The mentioned user does not have a balance yet, they need to send a message in a Nova enabled server first.");
+        embed.setDescription("The mentioned user does not have a balance yet or they do not exist, they need to send a message in a Nova enabled server first.");
         embed.setFooter('Use '+prefix+'help to see all of my commands');
         return msg.channel.send(embed);
     }
@@ -65,6 +67,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
         let embed = new Discord.RichEmbed;
         embed.setAuthor('Nova Pay', msg.author.avatarURL);
         embed.setTitle("Transaction Declined");
+        embed.setColor(0xff0000)
         embed.setThumbnail(`${images.npay}`)
         embed.setDescription("The amount specified is not a number, please specify a number to pay the user.");
         embed.setFooter('Use '+prefix+'help to see all of my commands');
@@ -80,6 +83,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
         let embed = new Discord.RichEmbed;
         embed.setAuthor('Nova Pay', msg.author.avatarURL);
         embed.setTitle("Transaction Declined");
+        embed.setColor(0xff0000)
         embed.setThumbnail(`${images.npay}`)
         embed.setDescription("you have insufficient funds to pay the user that amount, please specify a number to pay the user.");
         embed.setFooter('Use '+prefix+'help to see all of my commands');
@@ -100,6 +104,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
     embed.setAuthor('Nova Pay', msg.author.avatarURL);
     embed.setTitle("Transaction Completed");
     embed.setThumbnail(`${images.npay}`)
+    embed.setColor(color)
     embed.setDescription(`${rUser.username} has been payed $${pAmt}!`);
     embed.addField("Balances", `${rUser.username}: $${coins[rUser.id].coins}\n${pUser.username}: $${coins[pUser.id].coins}`)
     embed.setFooter('Use '+prefix+'help to see all of my commands');
