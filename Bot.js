@@ -279,7 +279,7 @@ client.on('message', msg => {
 			console.error(e);
 		}
 		try {
-			cmd.run(client, msg, args, throwE, suggest, color, prefix, images, coins);
+			cmd.run(client, msg, args, throwE, suggest, color, prefix, images, coins, settings);
 		}
 		catch (e) {
 			console.error(e);
