@@ -116,4 +116,4 @@ exports.help = {
 	name: 'pay',
 	description: 'transfers currency from one account to another',
 	usage: 'nva:pay <mention a user> <amount to pay>',
-    category: '- Economy commands'};
+    category: '- Economy Commands'};
