@@ -34,7 +34,9 @@ const client = new Discord.Client();
 const fs = require('fs');
 const col = require("colors");
 let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
-const dbl = new DBL(configFile.dblToken, client);
+
+const dbl = new DBL(configFile.dblToken, { webhookPort: 5000, webhookAuth: configFile.dblAuth });
+
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
 let coins = JSON.parse(fs.readFileSync(`${settings.directory}/coins.nvac`, 'utf8'));
@@ -164,7 +166,24 @@ setInterval(() =>
 	channel.setTopic(`Uptime: ${days}/${hours}/${minutes} memory usage: ${Math.round(used * 100) / 100}Mb`)
 		.catch(console.error);
 }, 120000);
-  
+
+dbl.webhook.on('ready', hook => {
+	console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+});
+dbl.webhook.on('vote', vote => {
+	if(!coins[msg.author.id]){
+		coins[msg.author.id] = {
+			coins: 0
+		};
+	}
+	console.log(`User with ID ${vote.user} just voted!`);
+	coins[vote.user] = {
+		coins: coins[vote.user].coins + 15
+	};
+	fs.writeFile(`${settings.directory}/coins.nvac`, JSON.stringify(coins), (err) => {
+		if (err) console.log(err);
+	});
+});
 client.on('message', msg => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
 	let prefixes = JSON.parse(fs.readFileSync(`${settings.directory}/prefixes.nvac`, 'utf8'));  
@@ -286,7 +305,6 @@ client.on('message', msg => {
 		}
 	}
 });
-
 client.on('guildMemberAdd', member => {
 	let serverConf = JSON.parse(fs.readFileSync(`${settings.directory}/serverConf.nvac`, 'utf8'));
 	if(!serverConf.member[member.guild.id]) return;
@@ -350,8 +368,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 		channel.send({embed});
 	}catch(e){console.error(e);}
 });
-let logintoken = JSON.parse(fs.readFileSync(`${settings.directory}/config.nvac`, 'utf8'));
-client.login(logintoken.token).catch(function() {
+client.login(configFile.token).catch(function() {
 	console.log('hey uh, Login failed. The token that you put in is most likely invalid, please put in a new one...'.red);
 	process.exit(0);
 });
