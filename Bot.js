@@ -37,17 +37,29 @@ const col = require("colors");
 let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
 
 const dbl = new DBL(configFile.dblToken, {webhookPort: 5000, webhookAuth: configFile.dblAuth}, client);
+dbl.webhook.on('ready', hook => {
+	console.log(`Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+});
 
+dbl.webhook.on('vote', vote => {
+	console.log(`User with ID ${vote.user} just voted!`);
+	coins[vote.user] = {
+		coins: coins[vote.user].coins + 15
+	};
+	fs.writeFile(`${settings.directory}/coins.nvac`, JSON.stringify(coins), (err) => {
+		if (err) console.log(err);
+	});
+});
 
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
 let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
 let coins = JSON.parse(fs.readFileSync(`${settings.directory}/coins.nvac`, 'utf8'));
 global.servers = {};
 
-process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................'.magenta);
-process.stdout.write('Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.'.magenta);
-process.stdout.write('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/'.magenta);
-process.stdout.write('This is free software, and you are welcome to redistribute it'.magenta);
+process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................\n'.magenta);
+process.stdout.write('Nova: Copyright (C) 2019 Designed and Programed by Christian T. and Nayab W.\n'.magenta);
+process.stdout.write('Some of the code that runs NOVΛ is based off of AstralMod, you can view AstralMods source code here: https://github.com/vicr123/AstralMod/\n'.magenta);
+process.stdout.write('This is free software, and you are welcome to redistri\nbute it\n'.magenta);
 process.stdout.write(`This version of Nova runs on nvaUX ${settings.version}`.magenta);
 
 client.commands = new Discord.Collection();
@@ -62,7 +74,7 @@ fs.readdir(`${settings.directory}/commands`, (err, files) => {
 			const command = require(`./commands/${file}`);
 			process.stdout.clearLine();
 			process.stdout.cursorTo(0);
-			process.stdout.write(`attempting to load the command "${command.help.name}".`.cyan);
+			process.stdout.write(`attempting to load the command "${command.help.name}".\n`.cyan);
 			client.commands.set(command.help.name, command);
 		}
 		catch (err) {
@@ -354,8 +366,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 		channel.send({embed});
 	}catch(e){console.error(e);}
 });
-let logintoken = JSON.parse(fs.readFileSync(`${settings.directory}/config.nvac`, 'utf8'));
-client.login(logintoken.token).catch(function() {
+client.login(configFile.token).catch(function() {
 	console.log('hey uh, Login failed. The token that you put in is most likely invalid, please put in a new one...'.red);
 	process.exit(0);
 });
