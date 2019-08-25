@@ -37,7 +37,7 @@ const server = http.createServer(app);
 
 let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
 
-const dbl = new DBL(configFile.dblToken, { webhookPort: 5000, webhookAuth: configFile.dblAuth });
+const dbl = new DBL(configFile.dblToken, { webhookServer: server, webhookPort: 5000, webhookAuth: configFile.dblAuth });
 
 
 let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
