@@ -22,7 +22,7 @@ Coming Soon.
 <img src="https://cdn.discordapp.com/attachments/537119674828324890/592914658654945290/unknown.png" alt="help menu">
 
 ## For the Nerds
-Nova is currently hosted on a Standard B1s (1 vcpus, 1 GiB memory) Azure VM; It is run as a child proccess of Stargate: A web interface for SE developers. 
+Nova is currently hosted on Swingin30's laptop since we ran out of credits for our op server and stargate is no longer but we are currently working on... something, cant reveal too much yet :D
 
 ## Special Thanks
 Reaction menus adapted from AstralMod by Victor Tran (vicr123#4567) and John Tur (reflectronic#6230) <a href="https://github.com/vicr123/AstralMod">[AstralMod Github]</a>
