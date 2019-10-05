@@ -34,7 +34,7 @@ const client = new Discord.Client();
 const fs = require('fs');
 const col = require("colors");
 
-let configFile = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/config.nvac', 'utf8'));
+let configFile = JSON.parse(fs.readFileSync('C:\\Users\\cjtho\\Documents\\Atlacomm\\Nova\\config.nvac', 'utf8'));
 
 const dbl = new DBL(configFile.dblToken, {webhookPort: 5000, webhookAuth: configFile.dblAuth}, client);
 dbl.webhook.on('ready', hook => {
@@ -46,14 +46,14 @@ dbl.webhook.on('vote', vote => {
 	coins[vote.user] = {
 		coins: coins[vote.user].coins + 15
 	};
-	fs.writeFile(`${settings.directory}/coins.nvac`, JSON.stringify(coins), (err) => {
+	fs.writeFile(`${settings.directory}\\coins.nvac`, JSON.stringify(coins), (err) => {
 		if (err) console.log(err);
 	});
 });
 
-let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
-let images = JSON.parse(fs.readFileSync(`${settings.directory}/images.nvac`, 'utf8'));
-let coins = JSON.parse(fs.readFileSync(`${settings.directory}/coins.nvac`, 'utf8'));
+let settings = JSON.parse(fs.readFileSync('C:\\Users\\cjtho\\Documents\\Atlacomm\\Nova\\settings.nvac', 'utf8'));
+let images = JSON.parse(fs.readFileSync(`${settings.directory}\\images.nvac`, 'utf8'));
+let coins = JSON.parse(fs.readFileSync(`${settings.directory}\\coins.nvac`, 'utf8'));
 global.servers = {};
 
 process.stdout.write('...............................................................................\n..........%%%%,....%%%%,...,%%%%%%%%/...%%%%#..../%%%%..../%%%%%%..............\n.........,%%%%%/...%%%%,..%%%%%%%%%%%%,.(%%%%....%%%%#...,%%%%%%%%.............\n.........,%%%%%%%..%%%%,.(%%%%*...%%%%%..%%%%*..,%%%%....%%%%.%%%%*............\n.........,%%%%%%%%.%%%%,.%%%%%....%%%%%..*%%%%..%%%%(...*%%%%.,%%%%............\n.........,%%%%.%%%%%%%%,.%%%%%....%%%%%...%%%%,.%%%%....%%%%...%%%%*...........\n.........,%%%%..%%%%%%%,.(%%%%*...%%%%%...,%%%#(%%%*...#%%%%....%%%%...........\n.........,%%%%...*%%%%%,..%%%%%%%%%%%%,....%%%%%%%%....%%%%,....%%%%(..........\n.........,%%%%.....%%%%....,%%%%%%%%*......,%%%%%%,...#%%%%.....#%%%%..........\n...............................................................................\n'.magenta);
@@ -65,7 +65,7 @@ process.stdout.write(`This version of Nova runs on nvaUX ${settings.version}`.ma
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 
-fs.readdir(`${settings.directory}/commands`, (err, files) => {
+fs.readdir(`${settings.directory}\\commands`, (err, files) => {
 	// Load Commands | Command Handler by jtsshieh and modified by Alee
 	if (err) console.error(err);
 	console.log(`Loading a total of ${files.length} commands into the memory.`.cyan);

@@ -31,7 +31,7 @@ module.exports.run = async (client, msg, args, throwE, suggest, color, prefix, i
 	const { version } = require('discord.js');
 	const Discord = require('discord.js');
 	const fs = require('fs');
-	let settings = JSON.parse(fs.readFileSync('/home/se/htdocs/private/js/nova/settings.nvac', 'utf8'));
+    let settings = JSON.parse(fs.readFileSync('C:\\Users\\cjtho\\Documents\\Atlacomm\\Nova\\settings.nvac', 'utf8'));
 
 	try{
 		let used = process.memoryUsage().heapUsed / 1024 / 1024;
